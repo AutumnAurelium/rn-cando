@@ -1,3 +1,6 @@
+/**
+ * Generates a text box with an arbitrary string of lorem ipsum placeholder text. Useful for testing.
+ */
 import React, { useState, useEffect } from 'react';
 import { ThemedText } from './ThemedText';
 

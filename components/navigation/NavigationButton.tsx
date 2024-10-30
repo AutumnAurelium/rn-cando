@@ -1,3 +1,6 @@
+/**
+ * A button that uses navigation information to mimic one of the navbar buttons.
+ */
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { type IconProps } from '@expo/vector-icons/build/createIconSet';
 import { Href, usePathname, useRouter, useUnstableGlobalHref } from 'expo-router';

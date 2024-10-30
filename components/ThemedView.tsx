@@ -1,3 +1,6 @@
+/**
+ * A view with a themed background color. Use this in place of the normal View element.
+ */
 import { View, type ViewProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';

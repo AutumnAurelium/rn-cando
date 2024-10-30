@@ -1,3 +1,6 @@
+/**
+ * You probably don't need to edit this file - this is all auto-generated.
+ */
 import { ScrollViewStyleReset } from 'expo-router/html';
 import { type PropsWithChildren } from 'react';
 

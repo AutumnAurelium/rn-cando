@@ -1,3 +1,6 @@
+/**
+ * This is the header bar that appears everywhere.
+ */
 import { useColorScheme, StyleSheet, View, Button } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";

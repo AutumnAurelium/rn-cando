@@ -1,3 +1,6 @@
+/**
+ * This is the "not found" screen. This will probably only appear in the event of a bug.
+ */
 import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
 

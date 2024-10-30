@@ -1,3 +1,6 @@
+/**
+ * This is the root view, it includes global elements like the header bar.
+ */
 import type { PropsWithChildren } from 'react';
 import { StyleSheet, useColorScheme } from 'react-native';
 import Animated, {

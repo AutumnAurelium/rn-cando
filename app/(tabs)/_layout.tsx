@@ -1,16 +1,18 @@
+/**
+ * This is the root layout file. It defines all of the screens and the navbar.
+ */
 import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  const theme = colorScheme === "dark" ? DarkTheme : DefaultTheme;
+  const colorScheme = useColorScheme(); // Gets the current OS color theme string
+  const theme = colorScheme === "dark" ? DarkTheme : DefaultTheme; // Uses the default color scheme for that theme
 
   return (
     <Tabs
@@ -20,9 +22,9 @@ export default function TabLayout() {
         tabBarStyle: [styles.tabBar, { backgroundColor: theme.colors.border }]
       }}>
       <Tabs.Screen
-        name="index"
+        name="index" // This matches to `app/(tabs)/index.tsx`, the home screen
         options={{
-          title: '',
+          title: '', // We don't use titles for these for a more streamlined look
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'list' : 'list-outline'} color={color} />
           ),
@@ -56,16 +58,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="calendar"
-        options={{
-          title: '',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={color} />
-          ),
-          tabBarButton: () => null, // Hide the calendar tab
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           title: '',
@@ -75,13 +67,23 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="calendar"
+        options={{
+          title: '',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={color} />
+          ),
+          tabBarButton: () => null, // Hide the calendar tab on the bottom bar
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: '',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'settings' : 'settings-outline'} color={color} />
           ),
-          tabBarButton: () => null, // Hide the calendar tab
+          tabBarButton: () => null, // Hide the profile button on the bottom bar
         }}
       />
     </Tabs>
@@ -105,4 +107,4 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 56,
     borderTopRightRadius: 56,
   }
-})
+});

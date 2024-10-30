@@ -1,3 +1,7 @@
+/**
+ * You probably don't need to modify this file - this is mostly root-level configuration.
+ */
+
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';

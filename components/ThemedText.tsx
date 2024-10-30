@@ -1,3 +1,6 @@
+/**
+ * Text with automatic consistent themes and styles. Make sure to use this whenever you want text, and to use a predefined text style rather than a bespoke style.
+ */
 import { Text, type TextProps, StyleSheet } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
