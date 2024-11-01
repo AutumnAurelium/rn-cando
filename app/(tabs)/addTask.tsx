@@ -1,26 +1,71 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Switch, TextInput, useColorScheme, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
+import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '@/constants/Colors';
+import { Picker } from '@react-native-picker/picker';
+import { DarkTheme, DefaultTheme } from '@react-navigation/native';
+import { useState } from 'react';
 
 // A.K.A. Task List
 
 export default function AddTaskScreen() {
+  const colorScheme = useColorScheme() ?? 'light';
+
+  const tint = colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint;
+
+  const colorTheme = colorScheme === 'dark' ? DarkTheme : DefaultTheme;
+
+  const [notifications, setNotifications] = useState(false);
+  const [frequency, setFrequency] = useState("monthly");
+
   return (
     <CanDoScrollView>
-      <ThemedText type='title'>
-        Add Task
-      </ThemedText>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          placeholder="Enter your text here"
+          placeholder="Task Name"
           placeholderTextColor="#999"
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="default"
           returnKeyType="done"
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          placeholderTextColor="#999"
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="default"
+          returnKeyType="done"
+        />
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+          <View style={{ margin: 36, alignItems: 'center' }}>
+            <Ionicons name="calendar-number" color={tint} size={48} />
+            <ThemedText style={{ textAlign: 'center' }}>Select Date</ThemedText>
+          </View>
+          <View style={{ margin: 36, alignItems: 'center' }}>
+            <Ionicons name="time" color={tint} size={48} />
+            <ThemedText style={{ textAlign: 'center' }}>Select Date</ThemedText>
+          </View>
+        </View>
+
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <ThemedText style={{verticalAlign: 'middle'}}>Frequency</ThemedText>
+          <Picker selectedValue={frequency} style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem} onValueChange={setFrequency}>
+            <Picker.Item label="Monthly" value="monthly" />
+            <Picker.Item label="Weekly" value="weekly" />
+            <Picker.Item label="Daily" value="daily" />
+          </Picker>
+        </View>
+
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <ThemedText style={{verticalAlign: 'middle', flexGrow: 1}}>Notifications</ThemedText>
+          <Switch trackColor={{false: colorTheme.colors.border, true: colorTheme.colors.border}} value={notifications} onChange={() => setNotifications(!notifications)} />
+        </View>
+
       </View>
     </CanDoScrollView>
   );
@@ -37,5 +82,17 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
+    color: 'white',
+    fontSize: 24,
+    margin: 14
   },
+  dropdown: {
+    color: 'white',
+    justifyContent: 'flex-end',
+    flexShrink: 1,
+    flexGrow: 1,
+  },
+  dropdownItem: {
+    fontSize: 24
+  }
 });
