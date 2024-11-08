@@ -7,9 +7,10 @@ import CanDoScrollView from '@/components/CanDoScrollView';
 export default function SettingsScreen() {
   return (
     <CanDoScrollView>
-      <ThemedText>
+      <ThemedText style={{ fontSize: 24, textAlign: 'center' }}>
         Hi.
       </ThemedText>
+
     </CanDoScrollView>
   );
 }
