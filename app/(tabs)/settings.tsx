@@ -1,3 +1,7 @@
+import { getApp } from "firebase/app";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { app } from "@/app/init";
+
 import { Image, StyleSheet, Text, View, Button, Alert, TouchableOpacity} from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -8,7 +12,10 @@ import { useState } from 'react';
 import { useColorScheme } from 'react-native'
 import { Colors } from '@/constants/Colors';
 
+const db = getFirestore(app)
+
 export default function SettingsScreen(){
+
   const colorScheme = useColorScheme() ?? 'light';
   const tint = colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint;
   const [theme, setTheme] = useState("dark");
@@ -24,6 +31,17 @@ export default function SettingsScreen(){
     Alert.alert('Delete account clicked')
   }
 
+  const saveSettings = () => {
+    addDoc(collection(db, "Settings"), {
+        theme: theme,
+        fontSize: size,
+        startDay: startDay,
+        infoDisplay: infoDisplay,
+        exportFormat: exportFormat,
+    }).then(() => {
+        console.log("settings added to database")
+    });
+  }
   return (
     <CanDoScrollView>
       <View style = {styles.container}>
@@ -75,6 +93,11 @@ export default function SettingsScreen(){
                 </Picker>
         </View>
 
+        <View style = {styles.buttonRow}>
+            <TouchableOpacity style = {{backgroundColor: 'white', borderRadius:8, marginVertical: 20}} onPress = {saveSettings}>
+                <Text style = {{color: 'black', fontSize: 24}}> Save Settings </Text>
+            </TouchableOpacity>
+        </View>
         <Text style = {styles.centerText}>Account</Text>
 
         <View style = {styles.buttonRow}>
