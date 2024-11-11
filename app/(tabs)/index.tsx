@@ -2,7 +2,7 @@ import { getApp } from "firebase/app";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { app } from "@/app/init";
 
-import { Image, StyleSheet, Platform, Button } from 'react-native';
+import { Image, StyleSheet, Platform, Button, View, TouchableOpacity, Text, Alert } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -20,46 +20,54 @@ export default function TasksScreen() {
 
   return (
     <CanDoScrollView>
-      <ThemedText>
-        <Button title="Add New Thing To the DB" onPress={() => {
-          addDoc(collection(db, "Tasks"), {
-            category: "yup",
-            completed: true,
-            date: "sometime",
-            description: "yeah",
-            frequency: "what",
-            groupName: "mhm",
-            notification: "yeag",
-            points: 10000000000,
-            time: "eventually",
-            title: "king"
-          }).then(() => {
-            console.log("the deed is done")
-          });
-        }}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#54E2FF' }]} onPress={() => Alert.alert('Personal Button pressed')} >
+            <Text style={styles.titleText}>Personal</Text>
 
-        </Button>
-        <LoremIpsumGenerator paragraphs={50} />
-      </ThemedText>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#4EFF74' }]} onPress={() => Alert.alert('All tasks Button pressed')} >
+            <Text style={styles.titleText}>All Tasks</Text>
+
+        </TouchableOpacity>
+      </View>
     </CanDoScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  buttonContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginTop: 25,
   },
-  stepContainer: {
-    gap: 8,
+  titleText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  button: {
+    padding: 15,
+    borderRadius: 15,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 150,
+    width: 150,
+  },
+  buttonText: {
+    padding: 3,
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 1,
+  },
+  icon: {
+    color:'#000000',
+    padding: 35,
+    fontSize: 50,
   },
 });
