@@ -34,9 +34,8 @@ export default function ProfileScreen() {
       }
   return (
     <CanDoScrollView>
-      <Text
-              style={[styles.input, {color: nam? '#FFFFFF' : '#aaaaaa'}]}
-              {name||"Name"}
+      <Text style={[styles.input, { color: name ? '#FFFFFF' : '#aaaaaa' }]}>
+                {name || "Name"}
       />
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
