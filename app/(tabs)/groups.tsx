@@ -1,13 +1,51 @@
+import { getApp } from "firebase/app";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { app } from "@/app/init";
+
 import {Text, TextInput, View, StyleSheet, TouchableOpacity, Alert,FlatList } from 'react-native';
+
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { ThemedText } from '@/components/ThemedText';
+import { Picker } from '@react-native-picker/picker';
+import { useColorScheme } from 'react-native';
 
 import CanDoScrollView from '@/components/CanDoScrollView';
 import { AddTaskPane } from '@/components/AddTaskPane';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
-
 import LoremIpsumGenerator from '@/components/LoremIpsum';
 
-export default function GroupsScreen() {
+const db = getFirestore(app)
+
+export default function GroupsScreen(){
+
+  const colorScheme = useColorScheme() ?? 'light';
+  const tint = colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint;
+  const [theme, setTheme] = useState("dark");
+  const [size, setSize] = useState("regular");
+  const handleEditAccount = () =>{
+    Alert.alert('Group 1 clicked')
+  }
+
+  const handleDeleteAccount = () =>{
+    Alert.alert('Group 2 clicked')
+  }
+
+  const handleDeleteAccount = () =>{
+      Alert.alert('Group 3 clicked')
+    }
+
+  const saveSettings = () => {
+    addDoc(collection(db, "Settings"), {
+        theme: theme,
+        fontSize: size,
+        exportFormat: exportFormat,
+    }).then(() => {
+        console.log("group added to database")
+    });
+  }
+  ///////////////
+
   return (
     <CanDoScrollView>
         <View style={styles.buttonContainer}>
@@ -39,7 +77,7 @@ export default function GroupsScreen() {
        </View>
     </CanDoScrollView>
   );
-}
+
 
 const styles = StyleSheet.create({
      buttonContainer: {
