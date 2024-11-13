@@ -18,18 +18,21 @@ export default function ProfileScreen() {
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
               placeholder="Name"
+              placeholderTextColor={"#aaaaaa"}
               value={name}
               onChangeText={setName}
       />
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
               placeholder="Change Username"
+              placeholderTextColor={"#aaaaaa"}
               value={username}
               onChangeText={setUserName}
       />
       <TextInput
                secureTextEntry={!showPassword}
                style={[styles.input, { color: '#FFFFFF' }]}
+               placeholderTextColor={"#aaaaaa"}
                placeholder="Change Password "
                value={password}
                onChangeText={setPassword}
@@ -38,7 +41,7 @@ export default function ProfileScreen() {
                 style={[styles.button, { backgroundColor: '#D9D9D9' }]}
                 onPress={() => Alert.alert('Save Button pressed')}
             >
-                <Text style={styles.buttonText}>Save</Text>
+                <Text style={[styles.buttonText, {color: '#222222'}]}>Save</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
