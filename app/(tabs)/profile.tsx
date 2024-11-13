@@ -29,18 +29,16 @@ export default function ProfileScreen() {
     const [showList, setShowList] = useState(false);
       const saveProfile = () => {
         addDoc(collection(db, "profile"), {
-            theme: theme,
-            fontSize: size,
-            startDay: startDay,
-            infoDisplay: infoDisplay,
-            exportFormat: exportFormat,
+            username:username,
+            password:password,
+
         }).then(() => {
             console.log("profile added to database")
         });
       }
   return (
     <CanDoScrollView>
-      <TextInput
+      <Text
               style={[styles.input, { color: '#FFFFFF' }]}
               placeholder="Name"
               placeholderTextColor={"#aaaaaa"}
