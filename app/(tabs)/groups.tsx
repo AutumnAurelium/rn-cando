@@ -10,46 +10,33 @@ import LoremIpsumGenerator from '@/components/LoremIpsum';
 export default function GroupsScreen() {
   return (
     <CanDoScrollView>
-    <View style={styles.buttonContainer}>
-           <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#DC7ADD' }]}
-               onPress={() => Alert.alert('Group 1 Button pressed')}
-                       >
+        <View style={styles.buttonContainer}>
+           <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => Alert.alert('Group 1 Button pressed')} >
                <Text style={styles.titleText}>Group 1</Text>
                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
            </TouchableOpacity>
 
-           <TouchableOpacity
-                         style={[styles.button, { backgroundColor: '#7A88DD' }]}
-                          onPress={() => Alert.alert('Group 2 Button pressed')}
-                                  >
-                          <Text style={styles.titleText}>Group 2</Text>
-                          <Text style={styles.buttonText}>Name 1 - 50 points</Text>
-                          <Text style={styles.buttonText}>Name 2 - 20 points</Text>
+           <TouchableOpacity style={[styles.button, { backgroundColor: '#7A88DD' }]} onPress={() => Alert.alert('Group 2 Button pressed')} >
+                <Text style={styles.titleText}>Group 2</Text>
+                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
+                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
            </TouchableOpacity>
-           </View>
+        </View>
 
-               <View style={styles.buttonContainer}>
-                      <TouchableOpacity
-                         style={[styles.button, { backgroundColor: '#7ADDBC' }]}
-                          onPress={() => Alert.alert('Group 3 Button pressed')}
-                                  >
-                          <Text style={styles.titleText}>Group 3</Text>
-                          <Text style={styles.buttonText}>Name 1 - 50 points</Text>
-                          <Text style={styles.buttonText}>Name 2 - 20 points</Text>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#7ADDBC' }]} onPress={() => Alert.alert('Group 3 Button pressed')} >
+                <Text style={styles.titleText}>Group 3</Text>
+                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
+                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
 
-                      </TouchableOpacity>
+            </TouchableOpacity>
 
-                      <TouchableOpacity
-                                    style={[styles.button, { backgroundColor: '#E2DDE2' }]}
-                                     onPress={() => Alert.alert('Add New Group Button Pressed')}
-                                             >
-                                    <TabBarIcon name="add" style = {styles.icon}/>
-
-                                     <Text style={styles.titleText}></Text>
-                      </TouchableOpacity>
-                      </View>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#E2DDE2' }]} onPress={() => Alert.alert('Add New Group Button Pressed')} >
+                <TabBarIcon name="add" style = {styles.icon}/>
+                <Text style={styles.titleText}></Text>
+            </TouchableOpacity>
+       </View>
     </CanDoScrollView>
   );
 }
@@ -66,26 +53,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 8,
-        },
-    button: {
-              padding: 15,
-              borderRadius: 15,
-              marginTop: 20,
-              alignItems: 'center',
-              height: 180,
-              width: 150,
-          },
-          buttonText: {
-              padding: 3,
-              color: '#FFFFFF',
-              fontSize: 12,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              padding: 1,
-          },
-          icon: {
-                    color:'#000000',
-                    padding: 35,
-                    fontSize: 50,
-          },
+     },
+     button: {
+        padding: 15,
+        borderRadius: 15,
+        marginTop: 20,
+        alignItems: 'center',
+        height: 180,
+        width: 150,
+     },
+     buttonText: {
+        padding: 3,
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        padding: 1,
+     },
+     icon: {
+        color:'#000000',
+        padding: 35,
+        fontSize: 50,
+     },
 });
