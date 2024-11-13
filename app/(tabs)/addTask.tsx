@@ -19,6 +19,7 @@ export default function AddTaskScreen() {
 
   const [notifications, setNotifications] = useState(false);
   const [frequency, setFrequency] = useState("monthly");
+  const [group, setGroup] = useState(0);
 
   return (
     <CanDoScrollView>
@@ -52,8 +53,8 @@ export default function AddTaskScreen() {
           </View>
         </View>
 
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <ThemedText style={{verticalAlign: 'middle'}}>Frequency</ThemedText>
+        <View style={styles.labeledInputContainer}>
+          <ThemedText style={styles.label}>Frequency</ThemedText>
           <Picker selectedValue={frequency} style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem} onValueChange={setFrequency}>
             <Picker.Item label="Monthly" value="monthly" />
             <Picker.Item label="Weekly" value="weekly" />
@@ -61,9 +62,19 @@ export default function AddTaskScreen() {
           </Picker>
         </View>
 
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={styles.labeledInputContainer}>
           <ThemedText style={{verticalAlign: 'middle', flexGrow: 1}}>Notifications</ThemedText>
           <Switch trackColor={{false: colorTheme.colors.border, true: colorTheme.colors.border}} value={notifications} onChange={() => setNotifications(!notifications)} />
+        </View>
+
+        <View style={styles.labeledInputContainer}>
+          <ThemedText style={styles.label}>Group</ThemedText>
+          <Picker selectedValue={group} onValueChange={setGroup} 
+            style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem}>
+            <Picker.Item label="Personal" value={0} />
+            <Picker.Item label="Test Group 1" value={1} />
+            <Picker.Item label="Test Group 2" value={2} />
+          </Picker>
         </View>
 
       </View>
@@ -76,6 +87,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  label: {
+    verticalAlign: 'middle',
+    flex: 1
+  },
+  labeledInputContainer: {
+    flex: 1,
+    flexDirection: 'row'
   },
   container: {
     gap: 8,
