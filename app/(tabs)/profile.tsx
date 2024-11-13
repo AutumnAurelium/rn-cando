@@ -18,10 +18,6 @@ const db = getFirestore(app)
 
 
 export default function ProfileScreen() {
-    const colorScheme = useColorScheme() ?? 'light';
-    const tint = colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint;
-    const [theme, setTheme] = useState("dark");
-    const [size, setSize] = useState("regular");
     const [name, setName] = useState('');
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -39,11 +35,8 @@ export default function ProfileScreen() {
   return (
     <CanDoScrollView>
       <Text
-              style={[styles.input, { color: '#FFFFFF' }]}
-              placeholder="Name"
-              placeholderTextColor={"#aaaaaa"}
-              value={name}
-              onChangeText={setName}
+              style={[styles.input, {color: nam? '#FFFFFF' : '#aaaaaa'}]}
+              {name||"Name"}
       />
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
