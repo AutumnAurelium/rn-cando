@@ -1,18 +1,43 @@
+import { getApp } from "firebase/app";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { app } from "@/app/init";
 
 import React, { useState } from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, Alert,FlatList } from 'react-native';
 
+import { Picker } from '@react-native-picker/picker';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
+import { useState } from 'react';
+import { useColorScheme } from 'react-native'
+import { Colors } from '@/constants/Colors';
+
+const db = getFirestore(app)
+
 
 
 export default function ProfileScreen() {
+    const colorScheme = useColorScheme() ?? 'light';
+    const tint = colorScheme === 'dark' ? Colors.dark.tint : Colors.light.tint;
+    const [theme, setTheme] = useState("dark");
+    const [size, setSize] = useState("regular");
     const [name, setName] = useState('');
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showList, setShowList] = useState(false);
+      const saveProfile = () => {
+        addDoc(collection(db, "profile"), {
+            theme: theme,
+            fontSize: size,
+            startDay: startDay,
+            infoDisplay: infoDisplay,
+            exportFormat: exportFormat,
+        }).then(() => {
+            console.log("profile added to database")
+        });
+      }
   return (
     <CanDoScrollView>
       <TextInput
