@@ -9,7 +9,6 @@ import { Picker } from '@react-native-picker/picker';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
-import { useState } from 'react';
 import { useColorScheme } from 'react-native'
 import { Colors } from '@/constants/Colors';
 
@@ -36,7 +35,7 @@ export default function ProfileScreen() {
     <CanDoScrollView>
       <Text style={[styles.input, { color: name ? '#FFFFFF' : '#aaaaaa' }]}>
                 {name || "Name"}
-      />
+      </Text>
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
               placeholder="Change Username"
