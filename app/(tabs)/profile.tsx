@@ -23,12 +23,12 @@ export default function ProfileScreen() {
     const [showPassword, setShowPassword] = useState(false);
     const [showList, setShowList] = useState(false);
       const saveProfile = () => {
-        addDoc(collection(db, "profile"), {
+        addDoc(collection(db, "Users"), {
             username:username,
             password:password,
 
         }).then(() => {
-            console.log("profile added to database")
+            console.log("Profile added to database")
         });
       }
   return (
@@ -53,9 +53,13 @@ export default function ProfileScreen() {
       />
             <TouchableOpacity
                 style={[styles.button, { backgroundColor: '#D9D9D9' }]}
-                onPress={() => Alert.alert('Save Button pressed')}
+                onPress={() =>{
+                    saveProfile();
+                    Alert.alert('Save Button pressed')}}
             >
+
                 <Text style={[styles.buttonText, {color: '#222222'}]}>Save</Text>
+
             </TouchableOpacity>
 
             <TouchableOpacity
