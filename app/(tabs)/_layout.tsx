@@ -86,6 +86,20 @@ export default function TabLayout() {
           tabBarButton: () => null, // Hide the profile button on the bottom bar
         }}
       />
+      <Tabs.Screen
+        name="allTaskList"
+          options={{
+            title: '',
+            tabBarButton: () => null, // Hide the profile button on the bottom bar
+          }}
+     />
+     <Tabs.Screen
+        name="personalTaskList"
+            options={{
+                title: '',
+                tabBarButton: () => null, // Hide the profile button on the bottom bar
+            }}
+     />
     </Tabs>
   );
 }

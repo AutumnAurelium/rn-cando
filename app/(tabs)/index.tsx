@@ -10,6 +10,7 @@ import { Redirect, useRouter } from 'expo-router';
 import CanDoScrollView from '@/components/CanDoScrollView';
 import LoremIpsumGenerator from '@/components/LoremIpsum';
 import { useEffect } from "react";
+import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 
 // A.K.A. Task List
 
@@ -18,16 +19,32 @@ const db = getFirestore(app);
 export default function TasksScreen() {
   const router = useRouter();
 
+  const navigateToAllTasks = () => {
+    router.push('/allTaskList');
+  }
+  const navigateToPersonalTasks = () => {
+    router.push('/personalTaskList');
+  }
   return (
     <CanDoScrollView>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#54E2FF' }]} onPress={() => Alert.alert('Personal Button pressed')} >
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#54E2FF' }]} onPress={navigateToPersonalTasks} >
             <Text style={styles.titleText}>Personal</Text>
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#4EFF74' }]} onPress={() => Alert.alert('All tasks Button pressed')} >
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#4EFF74' }]} onPress={navigateToAllTasks} >
             <Text style={styles.titleText}>All Tasks</Text>
+
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FACA78' }]} onPress={() => Alert.alert('Groups Button pressed')} >
+            <Text style={styles.groupText}>Groups</Text>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.overlayButton, { backgroundColor: '#FFFFFF' }]} onPress={() => Alert.alert('Group 1 Button pressed')} >
+            <Text style={styles.gText}>Group 1</Text>
 
         </TouchableOpacity>
       </View>
@@ -56,6 +73,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 150,
     width: 150,
+  },
+  groupButton: {
+    borderRadius:15,
+    width: 325,
+    height:300,
+    alignItems: 'center'
+  },
+  overlayButton: {
+    position: 'absolute',
+    marginTop: 60,
+    marginLeft: 10,
+    width: 325,
+    height: 60,
+    justifyContent: 'center',
+  },
+  groupText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  gText: {
+    color: '#000000',
+    fontSize: 18,
+    marginLeft: 5,
   },
   buttonText: {
     padding: 3,
