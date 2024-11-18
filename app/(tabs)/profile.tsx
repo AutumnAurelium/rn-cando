@@ -1,11 +1,15 @@
-
+import { getApp } from "firebase/app";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
 import React, { useState } from 'react';
+import { app } from "@/app/init";
+
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, Alert,FlatList } from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
 
+const db = getFirestore(app)
 
 export default function ProfileScreen() {
     const [name, setName] = useState('');
@@ -15,13 +19,8 @@ export default function ProfileScreen() {
     const [showList, setShowList] = useState(false);
   return (
     <CanDoScrollView>
-      <TextInput
-              style={[styles.input, { color: '#FFFFFF' }]}
-              placeholder="Name"
-              placeholderTextColor={"#aaaaaa"}
-              value={name}
-              onChangeText={setName}
-      />
+       <Text style={[{fontSize:25},{textAlign: 'center'},{color: '#FACA78'}]}>Name</Text>
+
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
               placeholder="Change Username"
@@ -39,7 +38,12 @@ export default function ProfileScreen() {
       />
             <TouchableOpacity
                 style={[styles.button, { backgroundColor: '#D9D9D9' }]}
-                onPress={() => Alert.alert('Save Button pressed')}
+                onPress={() =>         addDoc(collection(db, "Users"), {
+                                           username:username,
+                                           password:password,
+                                       }).then(() => {
+                                           console.log("Profile added to database")
+                                       })}
             >
                 <Text style={[styles.buttonText, {color: '#222222'}]}>Save</Text>
             </TouchableOpacity>

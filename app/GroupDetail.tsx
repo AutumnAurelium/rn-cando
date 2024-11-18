@@ -24,40 +24,40 @@ export default function GroupsScreen() {
 
   return (
     <CanDoScrollView>
-       <Text style={[styles.centerText,{textAlign: 'center'}]}>Group #</Text>
-       <Text style={[styles.centerText,{color: '#DC7ADD'}]}>Your Tasks:</Text>
+       <Text style={[{fontSize:25},{textAlign: 'center'},{color: '#FACA78'}]}>Group #</Text>
+       <Text style={[styles.TitleText,{color: '#54E2FF' }]}>Personal Tasks:</Text>
        <View style={{ flexDirection: 'row' }}>
-            <CheckBox checked={checked.checkbox1} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox1: !prev.checkbox1 }))} containerStyle = {styles.checkboxContainer}/>
+            <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
             <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 1</Text>
             <View style={{ flex: 5 }} />
-            <TabBarIcon name="enter" style={[styles.icon]} />
+            <CheckBox checked={checked.checkbox1} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox1: !prev.checkbox1 }))} containerStyle = {styles.checkboxContainer}/>
+            </TouchableOpacity>
        </View>
-        <Text style={[styles.DescriptionText]}>Description..</Text>
 
         <View style={{ flexDirection: 'row' }}>
-            <CheckBox checked={checked.checkbox2} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox2: !prev.checkbox2 }))} containerStyle = {styles.checkboxContainer}/>
+            <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                     <Text style={[styles.centerText]}>Text 2</Text>
                     <View style={{ flex: 5 }} />
-                    <TabBarIcon name="enter" style={[styles.icon]} />
+            <CheckBox checked={checked.checkbox2} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox2: !prev.checkbox2 }))} containerStyle = {styles.checkboxContainer}/>
+             </TouchableOpacity>
         </View>
-        <Text style={[styles.DescriptionText]}>Description..</Text>
-        <Text style={[styles.centerText,{color: '#DC7ADD'}]}>All Tasks:</Text>
+        <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
 
         <View style={{ flexDirection: 'row' }}>
-            <CheckBox checked={checked.checkbox3} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox3: !prev.checkbox3 }))} containerStyle = {styles.checkboxContainer}/>
+        <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 3</Text>
                 <View style={{ flex: 5 }} />
-                <TabBarIcon name="enter" style={[styles.icon]} />
+            <CheckBox checked={checked.checkbox3} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox3: !prev.checkbox3 }))} containerStyle = {styles.checkboxContainer}/>
+            </TouchableOpacity>
         </View>
-        <Text style={[styles.DescriptionText]}>Description..</Text>
         <View style={{ flexDirection: 'row' }}>
-            <CheckBox checked={checked.checkbox4} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox4: !prev.checkbox4 }))} containerStyle = {styles.checkboxContainer}/>
+        <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 4</Text>
                 <View style={{ flex: 5 }} />
-                <TabBarIcon name="enter" style={[styles.icon]} />
+            <CheckBox checked={checked.checkbox4} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox4: !prev.checkbox4 }))} containerStyle = {styles.checkboxContainer}/>
+            </TouchableOpacity>
         </View>
-        <Text style={[styles.DescriptionText]}>Description..</Text>
-        <Text style={[styles.centerText,{color: '#DC7ADD'}]}>Participants:</Text>
+        <Text style={[styles.TitleText,{color: '#FACA78'}]}>Participants:</Text>
         <View style={{ flexDirection: 'row' }}>
                <Text style={[styles.centerText,{textAlign: 'center'}]}>Name 1</Text>
                 <View style={{ flex: 5 }} />
@@ -83,12 +83,11 @@ export default function GroupsScreen() {
 
 const styles = StyleSheet.create({
   centerText: {
-    fontSize: 25,
+    fontSize: 15,
     color: 'white',
   },
-    DescriptionText: {
-      fontSize: 15,
-      color: 'white',
+    TitleText: {
+      fontSize: 20,
       marginVertical: 0
     },
     container: {
@@ -100,5 +99,17 @@ const styles = StyleSheet.create({
           color: 'white',
           marginRight: 10,
   },
+     taskButton: {
+          padding: 5,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+          height: 85,
+          flex: 1,
+          maxWidth: '100%',
+          justifyContent: 'space-between',
+          borderBottomWidth: 2,
+          borderBottomColor: 'grey'
+      },
 
 });

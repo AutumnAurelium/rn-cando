@@ -21,7 +21,7 @@ export default function GroupsScreen() {
                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
            </TouchableOpacity>
 
-           <TouchableOpacity style={[styles.button, { backgroundColor: '#7A88DD' }]} onPress={() => Alert.alert('Group 2 Button Pressed')} >
+           <TouchableOpacity style={[styles.button, { backgroundColor: '#7A88DD' }]} onPress={() => navigation.navigate('GroupDetail')} >
                 <Text style={styles.titleText}>Group 2</Text>
                 <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                 <Text style={styles.buttonText}>Name 2 - 20 points</Text>
@@ -29,7 +29,7 @@ export default function GroupsScreen() {
         </View>
 
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#7ADDBC' }]} onPress={() => Alert.alert('Group 3 Button Pressed')} >
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#7ADDBC' }]} onPress={() => navigation.navigate('GroupDetail')} >
                 <Text style={styles.titleText}>Group 3</Text>
                 <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                 <Text style={styles.buttonText}>Name 2 - 20 points</Text>
