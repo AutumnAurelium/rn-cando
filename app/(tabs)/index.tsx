@@ -25,6 +25,12 @@ export default function TasksScreen() {
   const navigateToPersonalTasks = () => {
     router.push('/personalTaskList');
   }
+  const navigateToGroups = () => {
+    router.push('/groups')
+  }
+  const navigateToGroupDetails = () => {
+    router.push('/groupDetail')
+  }
   return (
     <CanDoScrollView>
       <View style={styles.buttonContainer}>
@@ -39,11 +45,11 @@ export default function TasksScreen() {
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FACA78' }]} onPress={() => Alert.alert('Groups Button pressed')} >
+        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FACA78' }]} onPress={navigateToGroups} >
             <Text style={styles.groupText}>Groups</Text>
 
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.overlayButton, { backgroundColor: '#FFFFFF' }]} onPress={() => Alert.alert('Group 1 Button pressed')} >
+        <TouchableOpacity style={[styles.overlayButton, { backgroundColor: '#FFFFFF' }]} onPress={navigateToGroupDetails} >
             <Text style={styles.gText}>Group 1</Text>
 
         </TouchableOpacity>
