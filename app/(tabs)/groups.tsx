@@ -15,13 +15,13 @@ export default function GroupsScreen() {
   return (
     <CanDoScrollView>
         <View style={styles.buttonContainer}>
-           <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('GroupDetail')} >
+           <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('groupDetail')} >
                <Text style={styles.titleText}>Group 1</Text>
                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
            </TouchableOpacity>
 
-           <TouchableOpacity style={[styles.button, { backgroundColor: '#7A88DD' }]} onPress={() => navigation.navigate('GroupDetail')} >
+           <TouchableOpacity style={[styles.button, { backgroundColor: '#7A88DD' }]} onPress={() => navigation.navigate('groupDetail')} >
                 <Text style={styles.titleText}>Group 2</Text>
                 <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                 <Text style={styles.buttonText}>Name 2 - 20 points</Text>
@@ -29,7 +29,7 @@ export default function GroupsScreen() {
         </View>
 
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#7ADDBC' }]} onPress={() => navigation.navigate('GroupDetail')} >
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#7ADDBC' }]} onPress={() => navigation.navigate('groupDetail')} >
                 <Text style={styles.titleText}>Group 3</Text>
                 <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                 <Text style={styles.buttonText}>Name 2 - 20 points</Text>

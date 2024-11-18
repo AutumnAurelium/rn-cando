@@ -19,7 +19,7 @@ export default function ProfileScreen() {
     const [showList, setShowList] = useState(false);
   return (
     <CanDoScrollView>
-       <Text style={[{fontSize:25},{textAlign: 'center'},{color: '#FACA78'}]}>Name</Text>
+       <Text style={[{fontSize:25},{textAlign: 'center'},{color: '#FFFFFF'}]}>Name</Text>
 
       <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
