@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739196734453",
+    "project_id": "cando-68065",
+    "storage_bucket": "cando-68065.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739196734453:android:7c1bed7b2c6e55b8126ebc",
+        "android_client_info": {
+          "package_name": "com.rnCanDo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_Ju-QZhpKohZ4PxxJlIiE7eZ1eUahqr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
