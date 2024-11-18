@@ -7,7 +7,22 @@ import { CheckBox } from 'react-native-elements'
 import { useState } from 'react'
 
 export default function LeaderboardScreen() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState({
+      aTask1: false,
+      aTask2: false,
+      wTask1: false,
+      wTask2: false,
+      hTask1: false,
+      hTask2: false,
+
+  });
+
+  const toggleCheckbox = (task) => {
+    setChecked((prev) => ({
+        ...prev,
+        [task]: !prev[task],
+    }));
+  };
 
   return (
     <CanDoScrollView>
@@ -16,39 +31,39 @@ export default function LeaderboardScreen() {
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 1</Text>
-                <CheckBox checked={checked} onPress = {() => setChecked(!checked)} containerStyle = {styles.checkboxContainer}/>
+                <CheckBox checked={checked.aTask1} onPress = {() => toggleCheckbox('aTask1')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 2</Text>
-                <CheckBox checked={checked} onPress = {() => setChecked(!checked)} containerStyle = {styles.checkboxContainer}/>
+                <CheckBox checked={checked.aTask2} onPress = {() => toggleCheckbox('aTask2')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
         <ThemedText style={styles.title}>Work Tasks:</ThemedText>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 1</Text>
-                <CheckBox checked={checked} onPress = {() => setChecked(!checked)} containerStyle = {styles.checkboxContainer}/>
+                <CheckBox checked={checked.wTask1} onPress = {() => toggleCheckbox('wTask1')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 2</Text>
-                <CheckBox checked={checked} onPress = {() => setChecked(!checked)} containerStyle = {styles.checkboxContainer}/>
+                <CheckBox checked={checked.wTask2} onPress = {() => toggleCheckbox('wTask2')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
         <ThemedText style={styles.title}>Home Tasks:</ThemedText>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 1</Text>
-                    <CheckBox checked={checked} onPress = {() => setChecked(!checked)} containerStyle = {styles.checkboxContainer}/>
+                    <CheckBox checked={checked.hTask1} onPress = {() => toggleCheckbox('hTask1')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 2</Text>
-                <CheckBox checked={checked} onPress = {() => setChecked(!checked)} containerStyle = {styles.checkboxContainer}/>
+                <CheckBox checked={checked.hTask2} onPress = {() => toggleCheckbox('hTask2')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
      </View>
