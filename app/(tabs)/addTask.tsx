@@ -8,6 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
+
 // A.K.A. Task List
 
 export default function AddTaskScreen() {
@@ -21,16 +22,14 @@ export default function AddTaskScreen() {
   const [frequency, setFrequency] = useState("monthly");
   const [group, setGroup] = useState(0);
 
-  const [date, setDate] = useState(new Date());
+  const [date,setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [mode, setMode] = useState('date');
-  const handleDate = (event, dateVal) => {
-    setDate(dateVal);
-    setShowPicker(false);
-  };
-  const showMode = (modeVal) => {
-    setShowDatePicker(true);
-    setMode(modeVal)
+
+  const handleDate = (e, dateVal) =>{
+    if(dateVal) {
+        setDate(dateVal);
+    }
+    setShowDatePicker(false);
   }
   return (
     <CanDoScrollView>
@@ -55,18 +54,22 @@ export default function AddTaskScreen() {
         />
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
           <View style={{ margin: 30, alignItems: 'center' }}>
-            <TouchableOpacity onPress = {() => showMode("date")}>
-                <Ionicons name="calendar-number" color={tint} size={48} />
-            </TouchableOpacity>
-            <ThemedText style={{ textAlign: 'center' }}>Date</ThemedText>
-            { showDatePicker && (
-                        <DateTimePicker
-                            value = {date}
-                            mode = {mode}
-                            display = "default"
-                            onChange = {handleDate}
-                        />
-            )}
+
+                <ThemedText style={{ textAlign: 'center' }}>Date</ThemedText>
+
+                <TouchableOpacity onPress = {() => setShowDatePicker(true)}>
+                    <Ionicons name="calendar-number" color={tint} size={48} />
+                </TouchableOpacity>
+                {showDatePicker && (
+                    <DateTimePicker
+                        value = {date}
+                        mode = "date"
+                        display = "default"
+                        onChange = {handleDate}
+                    />
+               )}
+
+
           </View>
         </View>
 
