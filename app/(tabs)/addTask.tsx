@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, TextInput, useColorScheme, View } from 'react-native';
+import { StyleSheet, Switch, TextInput, useColorScheme, View, TouchableOpacity, Alert, Text } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
@@ -7,7 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { Picker } from '@react-native-picker/picker';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useState } from 'react';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 // A.K.A. Task List
 
 export default function AddTaskScreen() {
@@ -21,6 +21,17 @@ export default function AddTaskScreen() {
   const [frequency, setFrequency] = useState("monthly");
   const [group, setGroup] = useState(0);
 
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [mode, setMode] = useState('date');
+  const handleDate = (event, dateVal) => {
+    setDate(dateVal);
+    setShowPicker(false);
+  };
+  const showMode = (modeVal) => {
+    setShowDatePicker(true);
+    setMode(modeVal)
+  }
   return (
     <CanDoScrollView>
       <View style={styles.container}>
@@ -43,14 +54,31 @@ export default function AddTaskScreen() {
           returnKeyType="done"
         />
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-          <View style={{ margin: 36, alignItems: 'center' }}>
-            <Ionicons name="calendar-number" color={tint} size={48} />
-            <ThemedText style={{ textAlign: 'center' }}>Select Date</ThemedText>
+          <View style={{ margin: 30, alignItems: 'center' }}>
+            <TouchableOpacity onPress = {() => showMode("date")}>
+                <Ionicons name="calendar-number" color={tint} size={48} />
+            </TouchableOpacity>
+            <ThemedText style={{ textAlign: 'center' }}>Date</ThemedText>
+            { showDatePicker && (
+                        <DateTimePicker
+                            value = {date}
+                            mode = {mode}
+                            display = "default"
+                            onChange = {handleDate}
+                        />
+            )}
           </View>
-          <View style={{ margin: 36, alignItems: 'center' }}>
-            <Ionicons name="time" color={tint} size={48} />
-            <ThemedText style={{ textAlign: 'center' }}>Select Date</ThemedText>
-          </View>
+        </View>
+
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+           <View style={{ margin: 30, alignItems: 'center' }}>
+                <Ionicons name="time" color={tint} size={48} />
+                <ThemedText style={{ textAlign: 'center' }}>Start Time</ThemedText>
+           </View>
+           <View style={{ margin: 30, alignItems: 'center' }}>
+                <Ionicons name="time" color={tint} size={48} />
+                <ThemedText style={{ textAlign: 'center' }}>End Time</ThemedText>
+           </View>
         </View>
 
         <View style={styles.labeledInputContainer}>
