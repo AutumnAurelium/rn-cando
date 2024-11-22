@@ -5,15 +5,16 @@ import { AddTaskPane } from '@/components/AddTaskPane';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { CheckBox } from 'react-native-elements'
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import { collection, addDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {createStaticNavigation,useNavigation,} from '@react-navigation/native';
+import {createStaticNavigation,useNavigation, useRoute} from '@react-navigation/native';
 
-import LoremIpsumGenerator from '@/components/LoremIpsum';
+const db = getFirestore(app)
 
 export default function GroupsScreen() {
+
   const navigation = useNavigation();
       const [checked, setChecked] = useState({
       checkbox1: false,
@@ -21,35 +22,46 @@ export default function GroupsScreen() {
       checkbox3: false,
       checkbox4: false,
     });
+  const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
+  const route = useRoute()
+  const {groupVal} = route.params;
 
+  useEffect(() => {
+    const taskCollection = collection(db, 'Tasks')
+
+    const findQuery = query(taskCollection, where('groupName', '==', 0))
+
+    const subscribe = onSnapshot(findQuery,(querySnapshot) => {
+        const getTasks = []
+        querySnapshot.forEach((list) => {
+            getTasks.push({...list.data(), id: list.id})
+        })
+        setTasks(getTasks)
+        console.log(getTasks)
+        setLoading(false)
+    });
+    return () => subscribe();
+  }, [groupVal]);
+
+//   useEffect(() => {
+//     console.log('tasks:', tasks);
+//   }, [tasks]);
   return (
     <CanDoScrollView>
        <Text style={[{fontSize:25},{textAlign: 'center'},{color: '#FACA78'}]}>Group #</Text>
        <Text style={[styles.TitleText,{color: '#54E2FF' }]}>Personal Tasks:</Text>
-       <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
-            <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 1</Text>
-            <View style={{ flex: 5 }} />
-            <CheckBox checked={checked.checkbox1} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox1: !prev.checkbox1 }))} containerStyle = {styles.checkboxContainer}/>
-            </TouchableOpacity>
-       </View>
 
-        <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
-                    <Text style={[styles.centerText]}>Text 2</Text>
-                    <View style={{ flex: 5 }} />
-            <CheckBox checked={checked.checkbox2} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox2: !prev.checkbox2 }))} containerStyle = {styles.checkboxContainer}/>
-             </TouchableOpacity>
-        </View>
         <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
-
-        <View style={{ flexDirection: 'row' }}>
+        <FlatList data={tasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
         <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
-               <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 3</Text>
+               <Text style={[styles.centerText,{textAlign: 'center'}]}>{item.taskName}</Text>
                 <View style={{ flex: 5 }} />
             <CheckBox checked={checked.checkbox3} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox3: !prev.checkbox3 }))} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
-        </View>
+
+        )}
+        />
         <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 4</Text>
@@ -84,7 +96,7 @@ export default function GroupsScreen() {
 const styles = StyleSheet.create({
   centerText: {
     fontSize: 15,
-    color: 'white',
+    color: 'black',
   },
     TitleText: {
       fontSize: 20,

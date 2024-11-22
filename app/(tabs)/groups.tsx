@@ -15,7 +15,7 @@ export default function GroupsScreen() {
   return (
     <CanDoScrollView>
         <View style={styles.buttonContainer}>
-           <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('groupDetail')} >
+           <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('groupDetail', {groupVal : 'Group 1'})} >
                <Text style={styles.titleText}>Group 1</Text>
                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                <Text style={styles.buttonText}>Name 2 - 20 points</Text>

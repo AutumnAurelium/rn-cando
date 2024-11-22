@@ -34,24 +34,23 @@ export default function TasksScreen() {
   return (
     <CanDoScrollView>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#54E2FF' }]} onPress={navigateToPersonalTasks} >
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#A454FF' }]} onPress={navigateToPersonalTasks} >
             <Text style={styles.titleText}>Personal</Text>
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#4EFF74' }]} onPress={navigateToAllTasks} >
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#4ECAFF' }]} onPress={navigateToAllTasks} >
             <Text style={styles.titleText}>All Tasks</Text>
 
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FACA78' }]} onPress={navigateToGroups} >
+        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FA787A' }]} onPress={navigateToGroups} >
             <Text style={styles.groupText}>Groups</Text>
 
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.overlayButton, { backgroundColor: '#FFFFFF' }]} onPress={navigateToGroupDetails} >
+        <TouchableOpacity style={[styles.overlayButton]} onPress={navigateToGroupDetails} >
             <Text style={styles.gText}>Group 1</Text>
-
         </TouchableOpacity>
       </View>
     </CanDoScrollView>
@@ -93,17 +92,21 @@ const styles = StyleSheet.create({
     width: 325,
     height: 60,
     justifyContent: 'center',
+    alignItems: 'center'
   },
   groupText: {
     color: '#FFFFFF',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
+
   },
   gText: {
-    color: '#000000',
     fontSize: 18,
     marginLeft: 5,
+    textAlign: 'center',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2
   },
   buttonText: {
     padding: 3,

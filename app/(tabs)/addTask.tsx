@@ -28,7 +28,7 @@ export default function AddTaskScreen() {
   const [points, setPoints] = useState('');
   const pointsToInt = Number(points);
   const [notifications, setNotifications] = useState(false);
-  const [frequency, setFrequency] = useState("monthly");
+  const [frequency, setFrequency] = useState("none");
   const [group, setGroup] = useState(0);
 
   const [date,setDate] = useState(new Date());
@@ -81,7 +81,7 @@ export default function AddTaskScreen() {
           setETimePicker(true);
       }
   }
-  const savetasks = () => {
+  const addTasks = () => {
       addDoc(collection(db, "Tasks"), {
           date: date,
           description: desc,
@@ -94,6 +94,16 @@ export default function AddTaskScreen() {
           points: pointsToInt,
       }).then(() => {
           console.log("tasks added to database")
+
+          setTask('');
+          setDesc('');
+          setDate(new Date());
+          setStartTime(new Date());
+          setEndTime(new Date());
+          setFrequency("none")
+          setNotifications(false)
+          setGroup(0);
+          setPoints('')
       });
     }
   return (
@@ -180,6 +190,7 @@ export default function AddTaskScreen() {
         <View style={styles.labeledInputContainer}>
           <ThemedText style={styles.label}>Frequency</ThemedText>
           <Picker selectedValue={frequency} style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem} onValueChange={setFrequency}>
+            <Picker.Item label="None" value="none" />
             <Picker.Item label="Monthly" value="monthly" />
             <Picker.Item label="Weekly" value="weekly" />
             <Picker.Item label="Daily" value="daily" />
@@ -196,8 +207,8 @@ export default function AddTaskScreen() {
           <Picker selectedValue={group} onValueChange={setGroup} 
             style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem}>
             <Picker.Item label="Personal" value={0} />
-            <Picker.Item label="Test Group 1" value={1} />
-            <Picker.Item label="Test Group 2" value={2} />
+            <Picker.Item label="Group 1" value={1} />
+            <Picker.Item label="Group 2" value={2} />
           </Picker>
         </View>
         {group === 1 || group === 2 ? (
@@ -215,7 +226,7 @@ export default function AddTaskScreen() {
         ) : null
         }
         <View style = {styles.buttonRow}>
-            <TouchableOpacity style = {{backgroundColor: 'white', borderRadius:8, marginVertical: 20}} onPress = {savetasks}>
+            <TouchableOpacity style = {{backgroundColor: 'white', borderRadius:8, marginVertical: 20}} onPress = {addTasks}>
                 <Text style = {{color: 'black', fontSize: 20}}>Add Task</Text>
             </TouchableOpacity>
         </View>
