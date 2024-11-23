@@ -49,10 +49,9 @@ export default function GroupsScreen() {
 //   }, [tasks]);
   return (
     <CanDoScrollView>
-       <Text style={[{fontSize:25},{textAlign: 'center'},{color: '#FACA78'}]}>Group #</Text>
+       <Text style={[{fontSize:25},{textAlign: 'center'},{color: 'white'}]}>Group #</Text>
        <Text style={[styles.TitleText,{color: '#54E2FF' }]}>Personal Tasks:</Text>
 
-        <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
         <FlatList data={tasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
         <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                <Text style={[styles.centerText,{textAlign: 'center'}]}>{item.taskName}</Text>
@@ -62,6 +61,7 @@ export default function GroupsScreen() {
 
         )}
         />
+        <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
         <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 4</Text>
@@ -96,7 +96,7 @@ export default function GroupsScreen() {
 const styles = StyleSheet.create({
   centerText: {
     fontSize: 15,
-    color: 'black',
+    color: 'white',
   },
     TitleText: {
       fontSize: 20,
