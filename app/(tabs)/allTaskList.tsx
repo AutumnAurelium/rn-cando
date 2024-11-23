@@ -26,7 +26,7 @@ export default function LeaderboardScreen() {
   return (
     <CanDoScrollView>
      <View style = {styles.container}>
-        <ThemedText style={[styles.title, { color: '#4EFF74' }]}>All Tasks:</ThemedText>
+        <ThemedText style={[styles.title, { color: '#0353A4' }]}>All Tasks:</ThemedText>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 1</Text>
@@ -39,7 +39,7 @@ export default function LeaderboardScreen() {
                 <CheckBox checked={checked.task2} onPress = {() => toggleCheckbox('task2')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
-        <ThemedText style={[styles.title, { color: '#54E2FF' }]}>Personal Tasks:</ThemedText>
+        <ThemedText style={[styles.title, { color: '#7B2CBF' }]}>Personal Tasks:</ThemedText>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 1</Text>
@@ -52,7 +52,7 @@ export default function LeaderboardScreen() {
                 <CheckBox checked={checked.pTask2} onPress = {() => toggleCheckbox('pTask2')} containerStyle = {styles.checkboxContainer}/>
             </TouchableOpacity>
         </View>
-        <ThemedText style={[styles.title, { color: '#FACA78' }]}>Group Tasks:</ThemedText>
+        <ThemedText style={[styles.title, { color: '#EB5E28' }]}>Group Tasks:</ThemedText>
         <View style = {styles.titleContainer}>
             <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
                 <Text style={styles.taskText}>Task 1</Text>

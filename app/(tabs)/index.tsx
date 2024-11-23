@@ -34,18 +34,18 @@ export default function TasksScreen() {
   return (
     <CanDoScrollView>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#A454FF' }]} onPress={navigateToPersonalTasks} >
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#7B2CBF' }]} onPress={navigateToPersonalTasks} >
             <Text style={styles.titleText}>Personal</Text>
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#4ECAFF' }]} onPress={navigateToAllTasks} >
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#0353A4' }]} onPress={navigateToAllTasks} >
             <Text style={styles.titleText}>All Tasks</Text>
 
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FA787A' }]} onPress={navigateToGroups} >
+        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#EB5E28' }]} onPress={navigateToGroups} >
             <Text style={styles.groupText}>Groups</Text>
 
         </TouchableOpacity>
@@ -78,12 +78,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 150,
     width: 150,
+    borderColor: 'white',
+    borderWidth: 3,
   },
   groupButton: {
     borderRadius:15,
     width: 325,
     height:300,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 3,
   },
   overlayButton: {
     position: 'absolute',

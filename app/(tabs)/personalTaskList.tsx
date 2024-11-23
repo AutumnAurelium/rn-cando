@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 15,
         marginTop: 15,
-        color: '#54E2FF',
+        color: '#0353A4',
 
     },
     taskText: {
