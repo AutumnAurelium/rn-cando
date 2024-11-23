@@ -36,7 +36,7 @@ export default function GroupsScreen() {
 
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#E2DDE2' }]} onPress={() => Alert.alert('Add New Group Button Pressed')} >
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#E2DDE2' }]}  onPress={() => navigation.navigate('CreateGroup')} >
                 <TabBarIcon name="add" style = {styles.icon}/>
                 <Text style={styles.titleText}></Text>
             </TouchableOpacity>
