@@ -6,11 +6,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { Picker } from '@react-native-picker/picker';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { collection, addDoc, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { app } from "@/app/init";
 // A.K.A. Task List
 
@@ -30,6 +30,7 @@ export default function AddTaskScreen() {
   const [notifications, setNotifications] = useState(false);
   const [frequency, setFrequency] = useState("none");
   const [group, setGroup] = useState(0);
+  const [groups, setGroups] = useState([]);
 
   const [date,setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -81,7 +82,9 @@ export default function AddTaskScreen() {
           setETimePicker(true);
       }
   }
+
   const addTasks = () => {
+      console.log(group)
       addDoc(collection(db, "Tasks"), {
           date: date,
           description: desc,
@@ -106,6 +109,20 @@ export default function AddTaskScreen() {
           setPoints('')
       });
     }
+
+  useEffect(() => {
+        const getGroups = collection(db, 'Groups')
+
+        const subscribe = onSnapshot(getGroups, (querySnapshot) => {
+            const addGroups = []
+            querySnapshot.forEach((list) => {
+                addGroups.push({...list.data(), id: list.id})
+            })
+            setGroups(addGroups)
+            console.log(addGroups)
+        });
+        return () => subscribe();
+      }, []);
   return (
     <CanDoScrollView>
       <View style={styles.container}>
@@ -204,14 +221,15 @@ export default function AddTaskScreen() {
 
         <View style={styles.labeledInputContainer}>
           <ThemedText style={styles.label}>Group</ThemedText>
-          <Picker selectedValue={group} onValueChange={setGroup} 
+          <Picker selectedValue={group} onValueChange={setGroup}
             style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem}>
             <Picker.Item label="Personal" value={0} />
-            <Picker.Item label="Group 1" value={1} />
-            <Picker.Item label="Group 2" value={2} />
+             {groups.map((group) => (
+            <Picker.Item label={group.groupName} value={group.id} />
+            ))}
           </Picker>
         </View>
-        {group === 1 || group === 2 ? (
+        {group !== 0  && (
             <TextInput
              style={styles.pInput}
              placeholder="Points"
@@ -223,7 +241,7 @@ export default function AddTaskScreen() {
              value = {points}
              onChangeText = {setPoints}
             />
-        ) : null
+        )
         }
         <View style = {styles.buttonRow}>
             <TouchableOpacity style = {{backgroundColor: 'white', borderRadius:8, marginVertical: 20}} onPress = {addTasks}>

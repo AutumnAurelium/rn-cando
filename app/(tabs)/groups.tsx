@@ -4,43 +4,49 @@ import CanDoScrollView from '@/components/CanDoScrollView';
 import { AddTaskPane } from '@/components/AddTaskPane';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
+import {useState, useEffect} from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createStaticNavigation,useNavigation,} from '@react-navigation/native';
+import { collection, addDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
 
-import LoremIpsumGenerator from '@/components/LoremIpsum';
+const db = getFirestore(app)
 
 export default function GroupsScreen() {
   const navigation = useNavigation();
+  const [groups, setGroups] = useState([])
+
+  useEffect(() => {
+      const getGroups = collection(db, 'Groups')
+
+      const subscribe = onSnapshot(getGroups, (querySnapshot) => {
+          const addGroups = []
+          querySnapshot.forEach((list) => {
+              addGroups.push({...list.data(), id: list.id})
+          })
+          setGroups(addGroups)
+          console.log(addGroups)
+      });
+      return () => subscribe();
+    }, []);
+
   return (
     <CanDoScrollView>
         <View style={styles.buttonContainer}>
-           <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('groupDetail', {groupVal : 'Group 1'})} >
-               <Text style={styles.titleText}>Group 1</Text>
-               <Text style={styles.buttonText}>Name 1 - 50 points</Text>
-               <Text style={styles.buttonText}>Name 2 - 20 points</Text>
-           </TouchableOpacity>
+        {groups.map((group) => (
 
-           <TouchableOpacity style={[styles.button, { backgroundColor: '#7A88DD' }]} onPress={() => navigation.navigate('groupDetail')} >
-                <Text style={styles.titleText}>Group 2</Text>
-                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
-                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
-           </TouchableOpacity>
-        </View>
-
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#7ADDBC' }]} onPress={() => navigation.navigate('groupDetail')} >
-                <Text style={styles.titleText}>Group 3</Text>
-                <Text style={styles.buttonText}>Name 1 - 50 points</Text>
-                <Text style={styles.buttonText}>Name 2 - 20 points</Text>
-
-            </TouchableOpacity>
+               <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName})} >
+                    <Text style={styles.titleText}>{group.groupName}</Text>
+                    <Text style={styles.buttonText}>Name 1 - 50 points</Text>
+                    <Text style={styles.buttonText}>Name 2 - 20 points</Text>
+               </TouchableOpacity>
+        ))}
 
             <TouchableOpacity style={[styles.button, { backgroundColor: '#E2DDE2' }]}  onPress={() => navigation.navigate('CreateGroup')} >
                 <TabBarIcon name="add" style = {styles.icon}/>
                 <Text style={styles.titleText}></Text>
             </TouchableOpacity>
-       </View>
+        </View>
     </CanDoScrollView>
   );
 }
@@ -48,6 +54,7 @@ export default function GroupsScreen() {
 const styles = StyleSheet.create({
      buttonContainer: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
         marginTop: 25,
