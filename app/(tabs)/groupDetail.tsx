@@ -16,21 +16,15 @@ const db = getFirestore(app)
 export default function GroupsScreen() {
 
   const navigation = useNavigation();
-      const [checked, setChecked] = useState({
-      checkbox1: false,
-      checkbox2: false,
-      checkbox3: false,
-      checkbox4: false,
-    });
-  const [loading, setLoading] = useState(true);
+  const [checked, setChecked] = useState(null);
   const [tasks, setTasks] = useState([]);
   const route = useRoute()
-  const {groupVal} = route.params;
+  const {groupVal, groupName} = route.params;
 
   useEffect(() => {
     const taskCollection = collection(db, 'Tasks')
 
-    const findQuery = query(taskCollection, where('groupName', '==', 0))
+    const findQuery = query(taskCollection, where('groupName', '==', groupVal))
 
     const subscribe = onSnapshot(findQuery,(querySnapshot) => {
         const getTasks = []
@@ -39,35 +33,30 @@ export default function GroupsScreen() {
         })
         setTasks(getTasks)
         console.log(getTasks)
-        setLoading(false)
     });
     return () => subscribe();
   }, [groupVal]);
 
-//   useEffect(() => {
-//     console.log('tasks:', tasks);
-//   }, [tasks]);
+  const handleCheckbox = (checkbox) =>{
+    setChecked((prevChecked) => (prevChecked === checkbox ? null:checkbox));
+  }
   return (
     <CanDoScrollView>
-       <Text style={[{fontSize:25},{textAlign: 'center'},{color: 'white'}]}>Group #</Text>
+       <Text style={[{fontSize:25},{textAlign: 'center'},{color: 'white'}]}>{groupName}</Text>
        <Text style={[styles.TitleText,{color: '#54E2FF' }]}>Personal Tasks:</Text>
 
-        <FlatList data={tasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
-        <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
-               <Text style={[styles.centerText,{textAlign: 'center'}]}>{item.taskName}</Text>
-                <View style={{ flex: 5 }} />
-            <CheckBox checked={checked.checkbox3} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox3: !prev.checkbox3 }))} containerStyle = {styles.checkboxContainer}/>
-            </TouchableOpacity>
 
-        )}
-        />
         <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
         <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
-               <Text style={[styles.centerText,{textAlign: 'center'}]}>Text 4</Text>
-                <View style={{ flex: 5 }} />
-            <CheckBox checked={checked.checkbox4} onPress = {() =>setChecked((prev) => ({ ...prev, checkbox4: !prev.checkbox4 }))} containerStyle = {styles.checkboxContainer}/>
-            </TouchableOpacity>
+        <FlatList data={tasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
+                <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
+                       <Text style={[styles.centerText,{textAlign: 'center'}]}>{item.taskName}</Text>
+                        <View style={{ flex: 5 }} />
+                    <CheckBox checked={checked === item.id} onPress = {() => handleCheckbox(item.id)} containerStyle = {styles.checkboxContainer}/>
+                    </TouchableOpacity>
+
+                )}
+                />
         </View>
         <Text style={[styles.TitleText,{color: '#FACA78'}]}>Participants:</Text>
         <View style={{ flexDirection: 'row' }}>
@@ -85,11 +74,13 @@ export default function GroupsScreen() {
                 <View style={{ flex: 5 }} />
                <Text style={[styles.centerText,{textAlign: 'center'}]}>75</Text>
         </View>
-
-
-
-
-    </CanDoScrollView>
+         <View style = {styles.buttonRow}>
+        <TouchableOpacity style={{backgroundColor: 'red', borderRadius: 8, width: 150}} onPress={() => Alert.alert('Delete Button pressed')} >
+                               <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>Delete Group</Text>
+                                <View style={{ flex: 5 }} />
+                            </TouchableOpacity>
+        </View>
+        </CanDoScrollView>
   );
 }
 
@@ -123,5 +114,11 @@ const styles = StyleSheet.create({
           borderBottomWidth: 2,
           borderBottomColor: 'grey'
       },
+  buttonRow: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+
+    },
 
 });
