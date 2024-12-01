@@ -1,4 +1,4 @@
-import {Text, TextInput, View, StyleSheet, TouchableOpacity, useColorScheme,  Switch,Alert } from 'react-native';
+;import {Text, TextInput, View, StyleSheet, TouchableOpacity, useColorScheme,  Switch,Alert } from 'react-native';
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
@@ -23,15 +23,59 @@ export default function GroupsScreen() {
     const [description, setDescription] = useState('');
     const [passwordBool, setPasswordBool] = useState(false);
     const [password, setPassword] = useState('');
+    const [userArray, setUserArray] = useState<string[]>([]);
+    const [taskArray, setTaskArray] = useState<string[]>([]);
+    const [showAddUserScreen, setShowAddUserScreen] = useState(false);
     const navigation = useNavigation();
+    const handleCreateGroup = async () => {
+        if (!groupName.trim("")||!description.trim("")||(passwordBool && (!password || password.trim() === ''))) {
+            Alert.alert('Error', 'One or more fields are missing.');
+            return;
+        }
+    try {
+          await addDoc(collection(db, 'Groups'), {
+            groupName,
+            description,
+            passwordBool,
+            password: passwordBool ? password : null,
+            color,
+            users: userArray,
+            tasks: taskArray,
+          });
+         Alert.alert('Group created successfully!');
+            setGroupName('');
+            setDescription('');
+            setPassword('');
+            setUserArray([]);
+            setTaskArray([]);
+            setPasswordBool(false);
+        } catch (error) {
+          console.error('Error creating group:', error);
+        }
+      };
+  const handleAddUser = () => {
+          setUserArray([...userArray, '']);
+      };
+      const handleAddTask = () => {
+          setTaskArray([...taskArray, '']);
+      };
+
+      const handleUserNameChange = (index, value) => {
+          const updatedNames = [...userArray];
+          updatedNames[index] = value;
+          setUserArray(updatedNames);
+      };
+
+      const handleTaskChange = (index, value) => {
+          const updatedTasks = [...taskArray];
+          updatedTasks[index] = value;
+          setTaskArray(updatedTasks);
+      };
 
   return (
     <CanDoScrollView>
-       <View style={{ flexDirection: 'row' ,marginBottom: 110 }}>
-            <TouchableOpacity style={[styles.addUserButton, { position: 'absolute', top: 5, right: 20}]}onPress={() => navigation.navigate('addUserToGroup')} >
-                 <TabBarIcon name="add" style = {styles.icon}/>
-            <Text style={[styles.centerText]}>Add User</Text>
-            </TouchableOpacity>
+       <View style={{ flexDirection: 'row' ,marginBottom: 0 }}>
+
        </View>
           <TextInput
               style={[styles.input, { color: '#FFFFFF' }]}
@@ -50,7 +94,7 @@ export default function GroupsScreen() {
        <View style={[styles.input, { color: '#FFFFFF' }, {flexDirection: 'row'} ]} >
           <ThemedText style={{verticalAlign: 'middle',fontSize:20, flexGrow: 1}}>Password</ThemedText>
           <Switch trackColor={{false: colorTheme.colors.border, true: colorTheme.colors.border}} value={passwordBool} onChange={() => setPasswordBool(!passwordBool)} />
-        {passwordBool && (
+        {passwordBool ? (
             <TextInput
                 style={[styles.input, { color: '#FFFFFF' }]}
                 placeholder="Enter Password"
@@ -59,8 +103,43 @@ export default function GroupsScreen() {
                 value={password}
                 onChangeText={setPassword}
             />
-        )}
+            ) : null}
+
+
        </View>
+       <View style={styles.row}>
+                       <TouchableOpacity style={styles.addButton} onPress={handleAddUser}>
+                           <TabBarIcon name="add" style={styles.icon} />
+                           <Text style={styles.centerText}>Add User</Text>
+                       </TouchableOpacity>
+                   </View>
+                   {userArray.map((user, index) => (
+                       <TextInput
+                           key={index}
+                           style={[styles.input, { color: '#FFFFFF' }]}
+                           placeholderTextColor="#aaaaaa"
+                           placeholder="Enter User Name"
+                           value={user}
+                           onChangeText={(value) => handleUserNameChange(index, value)}
+                       />
+                   ))}
+
+                   <View style={styles.row}>
+                       <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>
+                           <TabBarIcon name="add" style={styles.icon} />
+                           <Text style={styles.centerText}>Add Task</Text>
+                       </TouchableOpacity>
+                   </View>
+                   {taskArray.map((task, index) => (
+                       <TextInput
+                           key={index}
+                           style={[styles.input, { color: '#FFFFFF' }]}
+                           placeholderTextColor="#aaaaaa"
+                           placeholder="Enter Task"
+                           value={task}
+                           onChangeText={(value) => handleTaskChange(index, value)}
+                       />
+                   ))}
         <View style={[styles.row]}>
             <ThemedText style={styles.color}>Color</ThemedText>
             <Picker selectedValue={color} style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem} onValueChange={setColor}>
@@ -68,84 +147,55 @@ export default function GroupsScreen() {
                 <Picker.Item label="Pink" value="pink" />
             </Picker>
         </View>
-        <TouchableOpacity style={{ backgroundColor: 'grey', borderRadius: 8, marginVertical: 20 }} onPress={() => addDoc(collection(db, "Groups"), {
-                                                                                                                                                             groupName:groupName,
-                                                                                                                                                             passwordBool:passwordBool,
-                                                                                                                                                             description:description,
-                                                                                                                                                            color:color,
-                                                                                                                                                             password:password,
-                                                                                                                                                         }).then(() => {
-                                                                                                                                                             console.log("Create Group added to database")
-                                                                                                                                                         })}
-                    >
-            <Text style={styles.buttonText}>Create</Text>
-         </TouchableOpacity>
+
+<TouchableOpacity style={styles.createButton} onPress={handleCreateGroup}>
+                <Text style={styles.buttonText}>Create</Text>
+            </TouchableOpacity>
 
     </CanDoScrollView>
   );
 }
 const styles = StyleSheet.create({
-  centerText: {
-    fontSize: 15,
-    color: 'white',
-  },
-  input: {
-      fontSize:20,
-          height: 85,
-          flex: 0,
-          maxWidth: '100%',
-          borderBottomWidth: 1,
-          borderBottomColor: 'grey',
-          textAlign: 'center'
-  },
-    container: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-      icon: {
-          flex: 0,
-           color: 'white',
-           fontSize: 20,
-
-      },
-     addUserButton: {
-          padding: 2,
-          alignItems: 'right',
-          justifyContent: 'right',
-          flexDirection: 'row',
-          height: 30,
-          flex: 1,
-          maxWidth: '25%',
-          justifyContent: 'right',
-          borderBottomWidth: 2,
-          borderBottomColor: 'grey',
-      },
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 0
-    },
-  dropdown: {
-    color: 'white',
-    flexShrink: 1,
-    flexGrow: 1,
-    height: 90
-  },
-  dropdownItem: {
-    color: 'white',
-    fontSize: 20,
-    height: 90
-  },
-   color: {
-      marginRight: 2,
-      color: 'white',
-      fontSize: 20,
-      textAlign: 'center'
-    },
-  buttonText: {
-    color: 'white',
-    fontSize: 24,
-     textAlign: 'center'
-
-  },
-});
+     centerText: {
+         fontSize: 15,
+         color: 'white',
+     },
+     input: {
+         fontSize: 20,
+         height: 50,
+         borderBottomWidth: 1,
+         borderBottomColor: 'grey',
+         textAlign: 'center',
+         marginBottom: 10,
+     },
+     row: {
+         flexDirection: 'row',
+         alignItems: 'center',
+         marginVertical: 10,
+     },
+     addButton: {
+         flexDirection: 'row',
+         alignItems: 'center',
+         marginRight: 10,
+     },
+     icon: {
+         color: 'white',
+         fontSize: 20,
+     },
+     dropdown: {
+         color: 'white',
+         flexShrink: 1,
+         flexGrow: 1,
+     },
+     createButton: {
+         backgroundColor: '#4CAF50',
+         padding: 15,
+         alignItems: 'center',
+         marginTop: 20,
+     },
+     buttonText: {
+         color: 'white',
+         fontSize: 20,
+         textAlign: 'center',
+     },
+ });
