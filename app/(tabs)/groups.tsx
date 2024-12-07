@@ -7,7 +7,7 @@ import { Colors } from '@/constants/Colors';
 import {useState, useEffect} from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {createStaticNavigation,useNavigation,} from '@react-navigation/native';
+import {createStaticNavigation,useNavigation, useRoute} from '@react-navigation/native';
 import { collection, addDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
 
 const db = getFirestore(app)
@@ -15,6 +15,7 @@ const db = getFirestore(app)
 export default function GroupsScreen() {
   const navigation = useNavigation();
   const [groups, setGroups] = useState([])
+  const route = useRoute()
 
   useEffect(() => {
       const getGroups = collection(db, 'Groups')
@@ -35,7 +36,7 @@ export default function GroupsScreen() {
         <View style={styles.buttonContainer}>
         {groups.map((group) => (
 
-               <TouchableOpacity style={[styles.button, { backgroundColor: '#DC7ADD' }]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName})} >
+               <TouchableOpacity style={[styles.button, {backgroundColor: group.color}]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName})} >
                     <Text style={styles.titleText}>{group.groupName}</Text>
                     <Text style={styles.buttonText}>Name 1 - 50 points</Text>
                     <Text style={styles.buttonText}>Name 2 - 20 points</Text>

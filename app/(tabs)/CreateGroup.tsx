@@ -24,6 +24,16 @@ export default function GroupsScreen() {
     const [passwordBool, setPasswordBool] = useState(false);
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
+    const colorHexes = {
+        blue: '#7A88DD',
+        pink: '#DC7ADD',
+        green: '#7ADDBC',
+        red: '#DD7A7F',
+        yellow: '#DDD87A',
+        lightBlue: '#7ADBDD',
+        purple: '#A87ADD',
+        brown: '#DDA57A'
+    };
 
   return (
     <CanDoScrollView>
@@ -66,17 +76,26 @@ export default function GroupsScreen() {
             <Picker selectedValue={color} style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem} onValueChange={setColor}>
                 <Picker.Item label="Blue" value="blue" />
                 <Picker.Item label="Pink" value="pink" />
+                <Picker.Item label="Green" value="green" />
+                <Picker.Item label="Red" value="red" />
+                <Picker.Item label="Yellow" value="yellow" />
+                <Picker.Item label="Light Blue" value="lightBlue" />
+                <Picker.Item label="Purple" value="purple" />
+                <Picker.Item label="Brown" value="brown" />
             </Picker>
         </View>
-        <TouchableOpacity style={{ backgroundColor: 'grey', borderRadius: 8, marginVertical: 20 }} onPress={() => addDoc(collection(db, "Groups"), {
-                                                                                                                                                             groupName:groupName,
-                                                                                                                                                             passwordBool:passwordBool,
-                                                                                                                                                             description:description,
-                                                                                                                                                            color:color,
-                                                                                                                                                             password:password,
-                                                                                                                                                         }).then(() => {
-                                                                                                                                                             console.log("Create Group added to database")
-                                                                                                                                                         })}
+        <TouchableOpacity style={{ backgroundColor: 'grey', borderRadius: 8, marginVertical: 20 }} onPress={() =>{ addDoc(collection(db, "Groups"), {
+              groupName:groupName,
+              passwordBool:passwordBool,
+              description:description,
+              color:colorHexes[color],
+              password:password,
+              }).then(() => {
+              console.log("Create Group added to database");
+              }).catch((error) => {
+                  console.log(error);
+                  })
+                }}
                     >
             <Text style={styles.buttonText}>Create</Text>
          </TouchableOpacity>
