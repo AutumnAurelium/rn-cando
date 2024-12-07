@@ -6,7 +6,7 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { CheckBox } from 'react-native-elements'
 import { useState, useEffect } from 'react'
-import { collection, addDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
+import { collection, addDoc, doc, getDocs, deleteDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createStaticNavigation,useNavigation, useRoute} from '@react-navigation/native';
@@ -40,6 +40,26 @@ export default function GroupsScreen() {
   const handleCheckbox = (checkbox) =>{
     setChecked((prevChecked) => (prevChecked === checkbox ? null:checkbox));
   }
+  const handleTask = (taskId, taskName, taskDescription, taskFrequency, taskPoints) => {
+      navigation.navigate('taskDetail', {taskId, taskName, taskDescription, taskFrequency, taskPoints});
+      }
+  const deleteGroup = async () => {
+      const groupDet = doc(db, 'Groups', groupVal)
+
+      try{
+          const tasks = collection(db, 'Tasks')
+          const taskQ = query(tasks, where('groupName', '==', groupVal))
+          const taskCollection = await getDocs(taskQ)
+
+          taskCollection.forEach((task) => {
+            deleteDoc(doc(db, 'Tasks', task.id))
+          });
+          await deleteDoc(groupDet)
+          navigation.goBack();
+      } catch(error){
+          console.error(error)
+          }
+    }
   return (
     <CanDoScrollView>
        <Text style={[{fontSize:25},{textAlign: 'center'},{color: 'white'}]}>{groupName}</Text>
@@ -49,7 +69,7 @@ export default function GroupsScreen() {
         <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
         <View style={{ flexDirection: 'row' }}>
         <FlatList data={tasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
-                <TouchableOpacity style={styles.taskButton} onPress={() => Alert.alert('Task Button pressed')} >
+                <TouchableOpacity style={styles.taskButton} onPress={() => handleTask(item.id, item.taskName, item.description, item.frequency, item.points)}>
                        <Text style={[styles.centerText,{textAlign: 'center'}]}>{item.taskName}</Text>
                         <View style={{ flex: 5 }} />
                     <CheckBox checked={checked === item.id} onPress = {() => handleCheckbox(item.id)} containerStyle = {styles.checkboxContainer}/>
@@ -75,10 +95,10 @@ export default function GroupsScreen() {
                <Text style={[styles.centerText,{textAlign: 'center'}]}>75</Text>
         </View>
          <View style = {styles.buttonRow}>
-        <TouchableOpacity style={{backgroundColor: 'red', borderRadius: 8, width: 150}} onPress={() => Alert.alert('Delete Button pressed')} >
-                               <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>Delete Group</Text>
-                                <View style={{ flex: 5 }} />
-                            </TouchableOpacity>
+        <TouchableOpacity style={{backgroundColor: 'red', borderRadius: 8, width: 150}} onPress={deleteGroup} >
+            <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>Delete Group</Text>
+            <View style={{ flex: 5 }} />
+        </TouchableOpacity>
         </View>
         </CanDoScrollView>
   );
