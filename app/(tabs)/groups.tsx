@@ -15,6 +15,7 @@ const db = getFirestore(app)
 export default function GroupsScreen() {
   const navigation = useNavigation();
   const [groups, setGroups] = useState([])
+  const [user, setUser] = useState([])
   const route = useRoute()
 
   useEffect(() => {
@@ -36,10 +37,18 @@ export default function GroupsScreen() {
         <View style={styles.buttonContainer}>
         {groups.map((group) => (
 
-               <TouchableOpacity style={[styles.button, {backgroundColor: group.color}]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName})} >
+               <TouchableOpacity style={[styles.button, {backgroundColor: group.color}]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName, groupUser: group.users,
+                                                                                                                                            groupDescription: group.description, groupBool:group.passwordBool, groupPassword: group.password })} >
                     <Text style={styles.titleText}>{group.groupName}</Text>
-                    <Text style={styles.buttonText}>Name 1 - 50 points</Text>
-                    <Text style={styles.buttonText}>Name 2 - 20 points</Text>
+                    {group.users ?(
+                    group.users.map((user, index) => (
+                        <Text style={styles.buttonText} key={index}>
+                        {user}
+                        </Text>
+                    ))
+                    ):(
+                    <Text style={styles.buttonText}> No Users </Text>
+                    )}
                </TouchableOpacity>
         ))}
 
