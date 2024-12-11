@@ -50,14 +50,12 @@ export default function GroupsScreen() {
             password: passwordBool ? password : null,
             color: colorHexes[color],
             users: userArray,
-            tasks: taskArray,
           });
          Alert.alert('Group created successfully!');
             setGroupName('');
             setDescription('');
             setPassword('');
             setUserArray([]);
-            setTaskArray([]);
             setPasswordBool(false);
         } catch (error) {
           console.error('Error creating group:', error);
@@ -66,20 +64,11 @@ export default function GroupsScreen() {
   const handleAddUser = () => {
           setUserArray([...userArray, '']);
       };
-      const handleAddTask = () => {
-          setTaskArray([...taskArray, '']);
-      };
 
       const handleUserNameChange = (index, value) => {
           const updatedNames = [...userArray];
           updatedNames[index] = value;
           setUserArray(updatedNames);
-      };
-
-      const handleTaskChange = (index, value) => {
-          const updatedTasks = [...taskArray];
-          updatedTasks[index] = value;
-          setTaskArray(updatedTasks);
       };
 
   return (
@@ -134,22 +123,7 @@ export default function GroupsScreen() {
                        />
                    ))}
 
-                   <View style={styles.row}>
-                       <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>
-                           <TabBarIcon name="add" style={styles.icon} />
-                           <Text style={styles.centerText}>Add Task</Text>
-                       </TouchableOpacity>
-                   </View>
-                   {taskArray.map((task, index) => (
-                       <TextInput
-                           key={index}
-                           style={[styles.input, { color: '#FFFFFF' }]}
-                           placeholderTextColor="#aaaaaa"
-                           placeholder="Enter Task"
-                           value={task}
-                           onChangeText={(value) => handleTaskChange(index, value)}
-                       />
-                   ))}
+
         <View style={[styles.row]}>
             <ThemedText style={styles.color}>Color</ThemedText>
             <Picker selectedValue={color} style={styles.dropdown} dropdownIconColor={tint} itemStyle={styles.dropdownItem} onValueChange={setColor}>
