@@ -19,7 +19,7 @@ export default function GroupsScreen() {
   const [checked, setChecked] = useState(null);
   const [tasks, setTasks] = useState([]);
   const route = useRoute()
-  const {groupVal, groupName, groupUser} = route.params;
+  const {groupVal, groupName, groupUser, groupDescription, groupBool,groupPassword} = route.params;
 
   useEffect(() => {
     const taskCollection = collection(db, 'Tasks')
@@ -64,10 +64,14 @@ console.log(groupUser)
   return (
     <CanDoScrollView>
        <Text style={[{fontSize:25},{textAlign: 'center'},{color: 'white'}]}>{groupName}</Text>
+       <Text style={[styles.TitleText,{color: '#7A88DD' }]}>Description:</Text>
+       <Text style={[styles.centerText]} >{groupDescription}</Text>
+
+
        <Text style={[styles.TitleText,{color: '#54E2FF' }]}>Personal Tasks:</Text>
 
 
-        <Text style={[styles.TitleText,{color: '#4EFF74'}]}>All Tasks:</Text>
+        <Text style={[styles.TitleText,{color: '#7ADDBC'}]}>All Tasks:</Text>
         <View style={{ flexDirection: 'row' }}>
         <FlatList data={tasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
                 <TouchableOpacity style={styles.taskButton} onPress={() => handleTask(item.id, item.taskName, item.description, item.frequency, item.points)}>
@@ -79,7 +83,7 @@ console.log(groupUser)
                 )}
                 />
         </View>
-        <Text style={[styles.TitleText,{color: '#FACA78'}]}>Participants:</Text>
+        <Text style={[styles.TitleText,{color: '#DDD87A'}]}>Participants:</Text>
         <View >
                 {groupUser ?(
                     groupUser.map((user, index) => (
@@ -91,6 +95,17 @@ console.log(groupUser)
                     <Text style={styles.centerText}> No Users </Text>
                  )}
         </View>
+        <View style={styles.buttonRow}>
+           <TouchableOpacity
+             style={{ backgroundColor: 'blue', borderRadius: 8, width: 150 }}
+             onPress={() => navigation.navigate('UpdateGroup', { groupVal, groupName, groupDescription, groupBool, groupPassword, groupUser})}
+           >
+             <Text style={{ fontSize: 18, color: 'white', textAlign: 'center' }}>
+               Edit Group
+             </Text>
+           </TouchableOpacity>
+         </View>
+
          <View style = {styles.buttonRow}>
         <TouchableOpacity style={{backgroundColor: 'red', borderRadius: 8, width: 150}} onPress={deleteGroup} >
             <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>Delete Group</Text>
@@ -103,7 +118,7 @@ console.log(groupUser)
 
 const styles = StyleSheet.create({
   centerText: {
-    fontSize: 15,
+    fontSize: 17,
     color: 'white',
   },
     TitleText: {

@@ -37,7 +37,8 @@ export default function GroupsScreen() {
         <View style={styles.buttonContainer}>
         {groups.map((group) => (
 
-               <TouchableOpacity style={[styles.button, {backgroundColor: group.color}]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName, groupUser: group.users})} >
+               <TouchableOpacity style={[styles.button, {backgroundColor: group.color}]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName, groupUser: group.users,
+                                                                                                                                            groupDescription: group.description, groupBool:group.passwordBool, groupPassword: group.password })} >
                     <Text style={styles.titleText}>{group.groupName}</Text>
                     {group.users ?(
                     group.users.map((user, index) => (
