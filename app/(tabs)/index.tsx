@@ -1,5 +1,5 @@
 import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
 
 import { Image, StyleSheet, Platform, Button, View, TouchableOpacity, Text, Alert } from 'react-native';
@@ -14,7 +14,7 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 
 // A.K.A. Task List
 
-const db = getFirestore(app);
+const db = getFirestore();
 
 export default function TasksScreen() {
   const router = useRouter();

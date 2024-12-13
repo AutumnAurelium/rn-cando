@@ -1,5 +1,5 @@
 import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "@react-native-firebase/firestore";
 import React, { useState } from 'react';
 import { app } from "@/app/init";
 
@@ -9,7 +9,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
 
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function ProfileScreen() {
     const [name, setName] = useState('');
