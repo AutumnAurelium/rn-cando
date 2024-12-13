@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, Text, FlatList } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, FlatList, View } from 'react-native';
 
 import {Agenda} from 'react-native-calendars';
 import React, { useState, useEffect} from 'react';
@@ -8,7 +8,7 @@ import Moment from 'moment';
 import { collection, getFirestore, onSnapshot} from "firebase/firestore";
 import { app } from "@/app/init";
 import {useNavigation} from '@react-navigation/native';
-
+import { CheckBox } from 'react-native-elements'
 
 const db = getFirestore(app)
 
@@ -18,6 +18,14 @@ export default function CalendarScreen() {
   const [tasks, setTasks] = useState([])
   const [selected, setSelected] = useState<string>(Moment().format('YYYY-MM-DD'));
   const [markedDates, setMarkedDates] = useState<Array<Date>>([]);
+  const [checked, setChecked] = useState({});
+
+  const handleCheckbox = (task) => {
+    setChecked((prev) => ({
+        ...prev,
+        [task]: !prev[task],
+    }));
+  };
 
   const handleTask = (taskId, taskName, taskDescription, taskFrequency, taskPoints) => {
     //navigates and passes task information as parameters
@@ -63,7 +71,10 @@ export default function CalendarScreen() {
               return (
                     <FlatList data={todayTasks} keyExtractor = {(item) => item.id} renderItem={({item}) => (
                         <TouchableOpacity style={styles.taskButton} onPress={() => handleTask(item.id, item.taskName, item.description, item.frequency, item.points)}>
-                            <Text style={[styles.titleText]}>{item.taskName}</Text>
+                            <View style={[styles.horizontalContainer]}>
+                              <Text style={[styles.titleText]}>{item.taskName}</Text>
+                              <CheckBox checked={checked[item.id] || false} onPress = {() => handleCheckbox(item.id)} containerStyle = {styles.checkboxContainer}/>
+                            </View>
                             <Text style={[styles.descText]}>{item.description}</Text>
                         </TouchableOpacity>
                     )}
@@ -90,31 +101,39 @@ export default function CalendarScreen() {
 }
 
   
-  const styles = StyleSheet.create({
-
-    safeAreaView: {
-      flex: 1,
-      backgroundColor: '#2d333b',
-      color: '#2d333b'
-    },
-    taskButton: {
-      padding: 15,
-      textAlign: 'left',
-      flexDirection: 'column',
-      flex: 1,
-      maxWidth: '100%',
-      borderBottomWidth: 2,
-      borderBottomColor: 'grey'
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: '#2d333b',
+    color: '#2d333b'
+  },
+  taskButton: {
+    padding: 15,
+    textAlign: 'left',
+    flexDirection: 'column',
+    flex: 1,
+    maxWidth: '100%',
+    borderBottomWidth: 2,
+    borderBottomColor: 'grey'
   },
   titleText: {
     color: 'white',
     fontSize: 20,
     paddingLeft: 10,
+    paddingTop: 10,
+    justifyContent: 'flex-start'
   },
   descText:{
     color: '#bdbdbd',
     fontSize: 15,
     paddingLeft: 10,
-    paddingTop: 5,
+  },
+  horizontalContainer:{
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+  checkboxContainer:{
+
   }
   });
