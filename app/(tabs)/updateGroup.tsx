@@ -129,7 +129,7 @@ export default function UpdateGroup() {
                     style={[styles.input, { color: '#FFFFFF' }]}
                     placeholderTextColor="#aaaaaa"
                     placeholder="Enter User Name"
-                    value={user}
+                    value={user.name}
                     onChangeText={(value) => handleUserNameChange(index, value)}
                     />
                     ))
@@ -153,66 +153,65 @@ export default function UpdateGroup() {
                 </View>
 
                 {/*update group button*/}
-                <TouchableOpacity style={styles.button} onPress={updateGroup}>
-                    <Text style={styles.buttonText}>Update Group</Text>
+               <View style={styles.buttonRow}>
+                <TouchableOpacity style={{ backgroundColor: 'blue', borderRadius: 8, width: 150, alignItems: 'center' }} onPress={updateGroup}>
+                    <Text style={{ fontSize: 18, color: 'white', textAlign: 'center' }}>Update Group</Text>
                 </TouchableOpacity>
             </View>
+            </View>
+
      </CanDoScrollView>
    );
 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-    borderRadius: 8,
-  },
-  centerText: {
-    fontSize: 15,
-    color: 'white',
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  addButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-  },
-  icon: {
-    color: 'white',
-    fontSize: 20,
-  },
-  dropdown: {
-    color: 'white',
-    flexShrink: 1,
-    flexGrow: 1,
-  },
-});
+     centerText: {
+         fontSize: 15,
+         color: 'white',
+     },
+     input: {
+         fontSize: 20,
+         height: 50,
+         borderBottomWidth: 1,
+         borderBottomColor: 'grey',
+         textAlign: 'center',
+         marginBottom: 10,
+     },
+     row: {
+         flexDirection: 'row',
+         alignItems: 'center',
+         marginVertical: 10,
+     },
+     addButton: {
+         flexDirection: 'row',
+         alignItems: 'center',
+         marginRight: 10,
+         color: 'blue',
+     },
+     buttonRow: {
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+     },
+     icon: {
+         color: 'white',
+         fontSize: 20,
+     },
+     dropdown: {
+         color: 'white',
+         flexShrink: 1,
+         flexGrow: 1,
+     },
+     createButton: {
+         backgroundColor: '#4CAF50',
+         padding: 15,
+         alignItems: 'center',
+         marginTop: 20,
+     },
+     buttonText: {
+         color: 'white',
+         fontSize: 20,
+         textAlign: 'center',
+     },
+ });
