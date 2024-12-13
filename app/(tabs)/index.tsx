@@ -1,7 +1,6 @@
 import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "@react-native-firebase/firestore";
+import { collection, addDoc, getFirestore, onSnapshot, query, where } from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
-import { collection, addDoc, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { Image, StyleSheet, Platform, Button, View, TouchableOpacity, Text, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -10,6 +9,8 @@ import CanDoScrollView from '@/components/CanDoScrollView';
 import LoremIpsumGenerator from '@/components/LoremIpsum';
 import { useEffect, useState } from "react";
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 // A.K.A. Task List
 
@@ -35,8 +36,21 @@ export default function TasksScreen() {
     }
 
     //state variables
-    const [groups, setGroups] = useState([])
-    const [tasks, setTasks] = useState([])
+    const [groups, setGroups] = useState([]);
+    const [tasks, setTasks] = useState([]);
+
+    const [signedIn, setSignedIn] = useState(false);
+
+    useEffect(() => {
+      async function login() {
+        if(!signedIn) {
+          setSignedIn(true);
+          await GoogleSignin.signIn();
+        }
+      }
+
+      login();
+    });
 
     //gets the group information from the database
     useEffect(() => {
@@ -125,7 +139,8 @@ const styles = StyleSheet.create({
     height:75,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    width: '100%'
   },
   overlayButton: {
     position: 'absolute',
@@ -141,8 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
-    textAlign: 'center'
-
+    textAlign: 'center',
   },
   gText: {
     fontSize: 18,

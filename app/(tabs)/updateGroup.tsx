@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text,Alert, TextInput,Switch, TouchableOpacity, useColorScheme,StyleSheet } from 'react-native';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc } from '@react-native-firebase/firestore';
 import { Colors } from '@/constants/Colors';
 import CanDoScrollView from '@/components/CanDoScrollView';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';

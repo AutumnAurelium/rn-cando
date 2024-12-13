@@ -5,12 +5,12 @@ import React, { useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Moment from 'moment';
-import { collection, getFirestore, onSnapshot} from "firebase/firestore";
+import { collection, getFirestore, onSnapshot} from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
 import {useNavigation} from '@react-navigation/native';
 import { CheckBox } from 'react-native-elements'
 
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function CalendarScreen() {
   const navigation = useNavigation();

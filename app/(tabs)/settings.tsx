@@ -1,5 +1,5 @@
-import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { getApp } from "@react-native-firebase/app";
+import { collection, addDoc, getFirestore } from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
 import { Image, StyleSheet, Text, View, Button, Alert, TouchableOpacity} from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';

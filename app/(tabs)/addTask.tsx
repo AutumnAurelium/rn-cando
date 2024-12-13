@@ -7,12 +7,12 @@ import { Picker } from '@react-native-picker/picker';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore, onSnapshot, query, where } from "firebase/firestore";
+import { getApp } from "@react-native-firebase/app";
+import { collection, addDoc, getFirestore, onSnapshot, query, where } from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
 
 //database connection
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function AddTaskScreen() {
     const colorScheme = useColorScheme() ?? 'light';
@@ -265,7 +265,7 @@ export default function AddTaskScreen() {
 
                 {/*add task button*/}
                 <View style = {styles.buttonRow}>
-                    <TouchableOpacity style = {{backgroundColor: 'white', borderRadius:8, marginVertical: 20}} onPress = {addTasks}>
+                    <TouchableOpacity style = {{backgroundColor: 'white', borderRadius:8, marginVertical: 20, padding: 10}} onPress = {addTasks}>
                         <Text style = {{color: 'black', fontSize: 20}}>Add Task</Text>
                     </TouchableOpacity>
                 </View>
@@ -316,6 +316,6 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });

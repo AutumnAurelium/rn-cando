@@ -6,6 +6,7 @@ import { Text, TextInput, View, StyleSheet, TouchableOpacity, Alert,FlatList } f
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const db = getFirestore()
 
@@ -73,7 +74,7 @@ export default function ProfileScreen() {
             {/*log out button*/}
             <TouchableOpacity
                 style={[styles.button, { backgroundColor: '#D10000' }]}
-                onPress={() => Alert.alert('Log Out Button pressed')}
+                onPress={() => GoogleSignin.signIn()}
             >
                 <Text style={styles.buttonText}>Log out</Text>
             </TouchableOpacity>

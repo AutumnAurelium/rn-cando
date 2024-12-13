@@ -1,5 +1,5 @@
 import {Text, TextInput, View, StyleSheet, TouchableOpacity, useColorScheme,  Switch,Alert } from 'react-native';
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "@react-native-firebase/firestore";
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
@@ -9,11 +9,11 @@ import { useState } from 'react';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { Picker } from '@react-native-picker/picker';
 import { app } from "@/app/init";
-import { getApp } from "firebase/app";
+import { getApp } from "@react-native-firebase/app";
 import {createStaticNavigation,useNavigation,} from '@react-navigation/native';
 
 //database connection
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function GroupsScreen() {
     const colorScheme = useColorScheme() ?? 'light';

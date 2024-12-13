@@ -1,5 +1,5 @@
 import { Image, StyleSheet, View, TouchableOpacity, Alert, Text, FlatList } from 'react-native';
-import { collection, addDoc, doc, getDocs, deleteDoc, updateDoc, getFirestore, app, onSnapshot, query, where, whereArrayContains } from "firebase/firestore";
+import { collection, addDoc, doc, getDocs, deleteDoc, updateDoc, getFirestore, app, onSnapshot, query, where, whereArrayContains } from "@react-native-firebase/firestore";
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import {createStaticNavigation,useNavigation, useRoute} from '@react-navigation/native';
 
 //database connection
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function LeaderboardScreen() {
     const navigation = useNavigation();

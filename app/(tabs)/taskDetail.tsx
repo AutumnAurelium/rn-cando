@@ -5,12 +5,12 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { CheckBox } from 'react-native-elements'
 import { useState, useEffect } from 'react'
-import { collection, addDoc, doc, getDocs, deleteDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
+import { collection, addDoc, doc, getDocs, deleteDoc, getFirestore, app, onSnapshot, query, where } from "@react-native-firebase/firestore";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createStaticNavigation,useNavigation, useRoute} from '@react-navigation/native';
 
 //database connection
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function TasksScreen() {
     const navigation = useNavigation();

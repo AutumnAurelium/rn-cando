@@ -6,10 +6,10 @@ import { Colors } from '@/constants/Colors';
 import {useState, useEffect} from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createStaticNavigation,useNavigation, useRoute} from '@react-navigation/native';
-import { collection, addDoc, getFirestore, app, onSnapshot, query, where } from "firebase/firestore";
+import { collection, addDoc, getFirestore, app, onSnapshot, query, where } from "@react-native-firebase/firestore";
 
 //database connection
-const db = getFirestore(app)
+const db = getFirestore()
 
 export default function GroupsScreen() {
     const navigation = useNavigation();
@@ -41,6 +41,7 @@ export default function GroupsScreen() {
                     <TouchableOpacity style={[styles.button, {backgroundColor: group.color}]} onPress={() => navigation.navigate('groupDetail', {groupVal : group.id, groupName: group.groupName, groupUser: group.users,
                                                                                                                                             groupDescription: group.description, groupBool:group.passwordBool, groupPassword: group.password })} >
                         <Text key = {user.id} style={styles.titleText}>{group.groupName}</Text>
+                        <>
                         {group.users ?(
                         group.users.map((user, index) => (
                             <Text style={styles.buttonText} key={index}>
@@ -50,6 +51,8 @@ export default function GroupsScreen() {
                         ):(
                             <Text style={styles.buttonText}> No Users </Text>
                         )}
+                        </>
+                        
                     </TouchableOpacity>
                 ))}
 

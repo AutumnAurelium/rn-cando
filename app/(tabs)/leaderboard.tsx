@@ -5,8 +5,8 @@ import { ThemedText } from '@/components/ThemedText';
 import CanDoScrollView from '@/components/CanDoScrollView';
 import { Colors } from '@/constants/Colors';
 import { useState, useEffect } from 'react';
-import { getApp } from "firebase/app";
-import { collection, addDoc, getFirestore, onSnapshot, query, where } from "firebase/firestore";
+import { getApp } from "@react-native-firebase/app";
+import { collection, addDoc, getFirestore, onSnapshot, query, where } from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
 
 //database connection
