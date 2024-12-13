@@ -1,15 +1,14 @@
 import { getApp } from "firebase/app";
 import { collection, addDoc, getFirestore } from "@react-native-firebase/firestore";
 import { app } from "@/app/init";
-
+import { collection, addDoc, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { Image, StyleSheet, Platform, Button, View, TouchableOpacity, Text, Alert } from 'react-native';
-
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Redirect, useRouter } from 'expo-router';
 import CanDoScrollView from '@/components/CanDoScrollView';
 import LoremIpsumGenerator from '@/components/LoremIpsum';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 
 // A.K.A. Task List
@@ -17,45 +16,83 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 const db = getFirestore();
 
 export default function TasksScreen() {
-  const router = useRouter();
+    const router = useRouter();
 
-  const navigateToAllTasks = () => {
-    router.push('/allTaskList');
-  }
-  const navigateToPersonalTasks = () => {
-    router.push('/personalTaskList');
-  }
-  const navigateToGroups = () => {
-    router.push('/groups')
-  }
-  const navigateToGroupDetails = () => {
-    router.push('/groupDetail')
-  }
-  return (
-    <CanDoScrollView>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#54E2FF' }]} onPress={navigateToPersonalTasks} >
-            <Text style={styles.titleText}>Personal</Text>
+    //handles navigation to other pages
+    const navigateToAllTasks = () => {
+        router.push('/allTaskList');
+    }
+    const navigateToPersonalTasks = () => {
+        const personalTasks = tasks.filter(task => task.groupName === 0)
+        console.log(personalTasks)
+        router.push('/personalTaskList', {personalTasks});
+    }
+    const navigateToGroups = () => {
+        router.push('/groups')
+    }
+    const navigateToGroupDetails = () => {
+        router.push('/groups')
+    }
 
-        </TouchableOpacity>
+    //state variables
+    const [groups, setGroups] = useState([])
+    const [tasks, setTasks] = useState([])
 
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#4EFF74' }]} onPress={navigateToAllTasks} >
-            <Text style={styles.titleText}>All Tasks</Text>
+    //gets the group information from the database
+    useEffect(() => {
+        const getGroups = collection(db, 'Groups')
 
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.groupButton, { backgroundColor: '#FACA78' }]} onPress={navigateToGroups} >
-            <Text style={styles.groupText}>Groups</Text>
+        const subscribe = onSnapshot(getGroups, (querySnapshot) => {
+            const addGroups = []
+            querySnapshot.forEach((list) => {
+                addGroups.push({...list.data(), id: list.id})
+            })
+            setGroups(addGroups)
+            console.log(addGroups)
+        });
+        return () => subscribe();
+    }, []);
 
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.overlayButton, { backgroundColor: '#FFFFFF' }]} onPress={navigateToGroupDetails} >
-            <Text style={styles.gText}>Group 1</Text>
+    //gets the task information from the database
+    useEffect(() => {
+        const getTasks = collection(db, 'Tasks')
 
-        </TouchableOpacity>
-      </View>
-    </CanDoScrollView>
-  );
+        const subscribe = onSnapshot(getTasks, (querySnapshot) => {
+            const addTasks = []
+            querySnapshot.forEach((list) => {
+                addTasks.push({...list.data(), id: list.id})
+            })
+            setTasks(addTasks)
+            console.log(addTasks)
+        });
+        return () => subscribe();
+    }, []);
+
+    return (
+        <CanDoScrollView>
+            <View style={styles.buttonContainer}>
+                {/*personal tasks button*/}
+                <TouchableOpacity style={[styles.button, { backgroundColor: '#7B2CBF' }]} onPress={navigateToPersonalTasks} >
+                    <Text style={styles.titleText}>Personal</Text>
+                </TouchableOpacity>
+
+                {/*all tasks button*/}
+                <TouchableOpacity style={[styles.button, { backgroundColor: '#0353A4' }]} onPress={navigateToAllTasks} >
+                    <Text style={styles.titleText}>All Tasks</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View>
+                {/*gets the group names and displays it*/}
+                <Text style={styles.groupText}>Groups</Text>
+                {groups.map((group) => (
+                    <TouchableOpacity key = {group.id} style={[styles.groupButton, {backgroundColor: group.color}]} onPress={navigateToGroupDetails} >
+                        <Text style={styles.gText}>{group.groupName}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </CanDoScrollView>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -79,12 +116,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 150,
     width: 150,
+    borderColor: 'white',
+    borderWidth: 3,
   },
   groupButton: {
     borderRadius:15,
     width: 325,
-    height:300,
-    alignItems: 'center'
+    height:75,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10
   },
   overlayButton: {
     position: 'absolute',
@@ -93,17 +134,21 @@ const styles = StyleSheet.create({
     width: 325,
     height: 60,
     justifyContent: 'center',
+    alignItems: 'center'
   },
   groupText: {
-    color: '#FFFFFF',
-    fontSize: 20,
+    color: 'white',
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
+    textAlign: 'center'
+
   },
   gText: {
-    color: '#000000',
     fontSize: 18,
     marginLeft: 5,
+    textAlign: 'center',
+    color: 'white'
   },
   buttonText: {
     padding: 3,

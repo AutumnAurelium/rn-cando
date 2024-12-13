@@ -90,23 +90,44 @@ export default function TabLayout() {
         name="allTaskList"
           options={{
             title: '',
-            tabBarButton: () => null, // Hide the profile button on the bottom bar
+            tabBarButton: () => null, // Hide the allTaskList button on the bottom bar
           }}
-     />
-     <Tabs.Screen
+      />
+      <Tabs.Screen
         name="personalTaskList"
+            options={{
+                title: '',
+                tabBarButton: () => null, // Hide the personalTaskList button on the bottom bar
+            }}
+      />
+      <Tabs.Screen
+        name="groupDetail"
+            options={{
+                title: '',
+                tabBarButton: () => null, // Hide the groupDetail button on the bottom bar
+            }}
+      />
+      <Tabs.Screen
+        name="createGroup"
+            options={{
+                title: '',
+                tabBarButton: () => null, // Hide the createGroup button on the bottom bar
+            }}
+      />
+      <Tabs.Screen
+        name="taskDetail"
+            options={{
+                title: '',
+                tabBarButton: () => null, // Hide the taskDetail button on the bottom bar
+            }}
+      />
+      <Tabs.Screen
+        name="updateGroup"
             options={{
                 title: '',
                 tabBarButton: () => null, // Hide the profile button on the bottom bar
             }}
-     />
-     <Tabs.Screen
-             name="groupDetail"
-                 options={{
-                     title: '',
-                     tabBarButton: () => null, // Hide the profile button on the bottom bar
-                 }}
-          />
+      />
     </Tabs>
   );
 }
