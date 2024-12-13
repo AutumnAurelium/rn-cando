@@ -9,6 +9,8 @@ import { collection, getFirestore, onSnapshot} from "firebase/firestore";
 import { app } from "@/app/init";
 import {useNavigation} from '@react-navigation/native';
 import { CheckBox } from 'react-native-elements'
+import { ThemedText } from '@/components/ThemedText';
+import { Colors } from '@/constants/Colors';
 
 const db = getFirestore(app)
 
@@ -89,8 +91,8 @@ export default function CalendarScreen() {
             // Agenda theme
             theme={{
               agendaKnobColor: '#768390',
-              calendarBackground: '#2d333b',
-              reservationsBackgroundColor: '#2d333b',
+              calendarBackground: Colors.dark.background,
+              reservationsBackgroundColor: Colors.dark.background,
               monthTextColor: 'white',
             }}
           />
@@ -100,7 +102,6 @@ export default function CalendarScreen() {
   );
 }
 
-  
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
